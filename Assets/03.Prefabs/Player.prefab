@@ -2452,6 +2452,7 @@ GameObject:
   - component: {fileID: 9036980633323257398}
   - component: {fileID: 7721425085319800397}
   - component: {fileID: 4387060825756726525}
+  - component: {fileID: 6265817695835288824}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2525,7 +2526,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.75, z: 0}
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!114 &4387060825756726525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2540,6 +2541,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMoveAbility
   _moveSpeed: 7
   _jumpForce: 2.5
+--- !u!114 &6265817695835288824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8189980434977739222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d64dfee1c328fa146a639a35fe1ca234, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerRotateAbility
+  _cameraRoot: {fileID: 0}
+  _rotationSpeed: 100
 --- !u!1 &8206070634150816031
 GameObject:
   m_ObjectHideFlags: 0
