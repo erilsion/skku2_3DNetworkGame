@@ -38,6 +38,10 @@ public class PlayerMoveAbility : MonoBehaviour
 
         _yVelocity -= GRAVITY * Time.deltaTime;
         direction.y = _yVelocity;
+        if (direction.y < 0)
+        {
+            direction.y = 0f;
+        }
 
         if (Input.GetKey(KeyCode.Space) && _characterController.isGrounded)
         {
