@@ -6402,6 +6402,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3216564282020904345, guid: 89925a399fd6cce4180fbbb3c43884d7, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8189980434977739222, guid: 89925a399fd6cce4180fbbb3c43884d7, type: 3}
       propertyPath: m_Name
       value: Player
@@ -6449,37 +6453,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8189980434977739222, guid: 89925a399fd6cce4180fbbb3c43884d7, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 862986709}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89925a399fd6cce4180fbbb3c43884d7, type: 3}
---- !u!1 &862986703 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8189980434977739222, guid: 89925a399fd6cce4180fbbb3c43884d7, type: 3}
-  m_PrefabInstance: {fileID: 862986702}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &862986707 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8855052669661678444, guid: 89925a399fd6cce4180fbbb3c43884d7, type: 3}
   m_PrefabInstance: {fileID: 862986702}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &862986709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 862986703}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5de330c195f8a0e4bb3a7e157137e1a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackAbility
-  _attackAnimationIndex: 3
-  _attackCooltime: 1.2
-  _sequentialAttackAnimation: 1
-  _randomAttackAnimation: 0
 --- !u!1001 &869809752
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12960,7 +12940,7 @@ GameObject:
   - component: {fileID: 1668432857}
   - component: {fileID: 1668432858}
   m_Layer: 0
-  m_Name: CinemachineCamera
+  m_Name: FollowCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
