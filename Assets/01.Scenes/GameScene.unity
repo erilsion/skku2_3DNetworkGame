@@ -6406,33 +6406,9 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4425511591221672342, guid: 89925a399fd6cce4180fbbb3c43884d7, type: 3}
-      propertyPath: m_SynchronizeLayers.Array.data[0].SynchronizeType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4425511591221672342, guid: 89925a399fd6cce4180fbbb3c43884d7, type: 3}
-      propertyPath: m_SynchronizeParameters.Array.data[0].SynchronizeType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4425511591221672342, guid: 89925a399fd6cce4180fbbb3c43884d7, type: 3}
-      propertyPath: m_SynchronizeParameters.Array.data[1].SynchronizeType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4425511591221672342, guid: 89925a399fd6cce4180fbbb3c43884d7, type: 3}
-      propertyPath: m_SynchronizeParameters.Array.data[2].SynchronizeType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4425511591221672342, guid: 89925a399fd6cce4180fbbb3c43884d7, type: 3}
-      propertyPath: m_SynchronizeParameters.Array.data[3].SynchronizeType
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8189980434977739222, guid: 89925a399fd6cce4180fbbb3c43884d7, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8189980434977739222, guid: 89925a399fd6cce4180fbbb3c43884d7, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8855052669661678444, guid: 89925a399fd6cce4180fbbb3c43884d7, type: 3}
       propertyPath: m_LocalPosition.x
