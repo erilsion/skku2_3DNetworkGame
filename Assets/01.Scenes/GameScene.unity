@@ -6402,10 +6402,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6265817695835288824, guid: 89925a399fd6cce4180fbbb3c43884d7, type: 3}
-      propertyPath: _cameraRoot
-      value: 
-      objectReference: {fileID: 1668432856}
     - target: {fileID: 8189980434977739222, guid: 89925a399fd6cce4180fbbb3c43884d7, type: 3}
       propertyPath: m_Name
       value: Player
@@ -13044,7 +13040,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineThirdPersonAim
   AimCollisionFilter:
     serializedVersion: 2
-    m_Bits: 33
+    m_Bits: 1
   IgnoreTag: 
   AimDistance: 200
   NoiseCancellation: 1

@@ -8,6 +8,7 @@ public class PlayerMoveAbility : MonoBehaviour
     private float _yVelocity = 0f;
 
     private CharacterController _characterController;
+    private Animator _animator;
 
     // 1. 중력 적용하기.
     // 2. 스페이스바 누르면 점프하기.
@@ -21,6 +22,7 @@ public class PlayerMoveAbility : MonoBehaviour
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
+        _animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -29,6 +31,7 @@ public class PlayerMoveAbility : MonoBehaviour
         float v = Input.GetAxis("Vertical");
 
         Vector3 direction = new Vector3(h, 0, v);
+        _animator.SetFloat("Speed", direction.magnitude);
         direction.Normalize();
 
         direction = Camera.main.transform.TransformDirection(direction);

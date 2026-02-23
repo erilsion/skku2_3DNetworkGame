@@ -15,8 +15,11 @@ public class PlayerRotateAbility : MonoBehaviour
 
     private void Update()
     {
-        _mx += Input.GetAxis("Mouse X") * _rotationSpeed * Time.deltaTime;
-        _my += Input.GetAxis("Mouse Y") * _rotationSpeed * Time.deltaTime;
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
+
+        _mx += mouseX * _rotationSpeed * Time.deltaTime;
+        _my += mouseY * _rotationSpeed * Time.deltaTime;
 
         _my = Mathf.Clamp(_my, -90f, 90f);
 
