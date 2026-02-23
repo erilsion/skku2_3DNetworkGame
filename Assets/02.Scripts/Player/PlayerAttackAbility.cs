@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 
-public class PlayerAttackAbility : MonoBehaviour
+public class PlayerAttackAbility : PlayerAbility
 {
     [SerializeField] private int _attackAnimationIndex = 3;
-    [SerializeField] private float _attackCooltime = 1.2f;
     [SerializeField] private bool _sequentialAttackAnimation = true;
     [SerializeField] private bool _randomAttackAnimation = false;
 
@@ -12,15 +11,17 @@ public class PlayerAttackAbility : MonoBehaviour
 
     private Animator _animator;
 
-    private void Awake()
+    private void Start()
     {
         _animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
+        if (!_owner.PhotonView.IsMine) return;
+
         _attackTimer += Time.deltaTime;
-        if (_attackTimer < _attackCooltime) return;
+        if (_attackTimer < _owner.Stat.AttackSpeed) return;
 
         if (!_sequentialAttackAnimation && !_randomAttackAnimation)
         {

@@ -2485,6 +2485,7 @@ GameObject:
   - component: {fileID: 4387060825756726525}
   - component: {fileID: 6265817695835288824}
   - component: {fileID: 4396274215945106493}
+  - component: {fileID: -2682731214549281664}
   - component: {fileID: 3216564282020904345}
   - component: {fileID: 3717452150916563149}
   - component: {fileID: 4425511591221672342}
@@ -2575,8 +2576,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74075f44b03629d46b51a6127aac0570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMoveAbility
-  _moveSpeed: 7
-  _jumpForce: 2.5
 --- !u!114 &6265817695835288824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2590,7 +2589,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerRotateAbility
   _cameraRoot: {fileID: 5107169483472814154}
-  _rotationSpeed: 100
 --- !u!114 &4396274215945106493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2604,9 +2602,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackAbility
   _attackAnimationIndex: 3
-  _attackCooltime: 1.2
   _sequentialAttackAnimation: 1
   _randomAttackAnimation: 0
+--- !u!114 &-2682731214549281664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8189980434977739222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a24dea0909a71e409f1aec1b9606410, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  Stat:
+    MoveSpeed: 7
+    JumpPower: 2.5
+    RotationSpeed: 100
+    AttackSpeed: 0.8
+  PhotonView: {fileID: 3216564282020904345}
 --- !u!114 &3216564282020904345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2666,13 +2681,13 @@ MonoBehaviour:
     SynchronizeType: 2
     Name: Speed
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 0
     Name: Attack0
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 0
     Name: Attack1
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 0
     Name: Attack2
   m_SynchronizeLayers:
   - SynchronizeType: 1

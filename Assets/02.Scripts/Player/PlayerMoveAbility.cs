@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
 
-public class PlayerMoveAbility : MonoBehaviour
+public class PlayerMoveAbility : PlayerAbility
 {
-    [SerializeField] private float _moveSpeed = 7f;
-    [SerializeField] private float _jumpForce = 2.5f;
     private const float GRAVITY = 9.8f;
     private float _yVelocity = 0f;
 
@@ -19,7 +17,7 @@ public class PlayerMoveAbility : MonoBehaviour
     // - 열거형 옵션 1. 순차적
     // -        옵션 2. 랜덤
 
-    private void Awake()
+    private void Start()
     {
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
@@ -27,6 +25,8 @@ public class PlayerMoveAbility : MonoBehaviour
 
     void Update()
     {
+        if (!_owner.PhotonView.IsMine) return;
+
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
@@ -45,9 +45,9 @@ public class PlayerMoveAbility : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space) && _characterController.isGrounded)
         {
-            _yVelocity = _jumpForce;
+            _yVelocity = _owner.Stat.JumpPower;
         }
 
-        _characterController.Move(direction * _moveSpeed * Time.deltaTime);
+        _characterController.Move(direction * _owner.Stat.MoveSpeed * Time.deltaTime);
     }
 }
