@@ -19,9 +19,9 @@ public class PlayerMinimapAbility : PlayerAbility
 
     private void LateUpdate()
     {
+        if (!_owner.PhotonView.IsMine) return;
         if (_target == null) return;
         _target = _owner.transform;
-        if (!_owner.PhotonView.IsMine) return;
 
         Vector3 targetPosition = _target.position;
         Vector3 finalPosition = targetPosition + new Vector3(0f, _offsetY, 0f);
