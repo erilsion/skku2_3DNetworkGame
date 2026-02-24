@@ -4,7 +4,6 @@ using UnityEngine;
 public class PlayerTauntAbility : PlayerAbility
 {
     private Animator _animator;
-    private float _movingSpeed = 0.1f;
 
     private void Start()
     {

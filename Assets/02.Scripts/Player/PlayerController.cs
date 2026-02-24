@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 
 // 플레이어의 대표로서 외부와의 소통 또는 어빌리티들을 관리하는 역할이다.
-public class PlayerController : MonoBehaviour, IPunObservable
+public class PlayerController : MonoBehaviour, IPunObservable, IDamageable
 {
     public PlayerStat Stat;
     public PhotonView PhotonView;
@@ -12,6 +12,11 @@ public class PlayerController : MonoBehaviour, IPunObservable
     private void Awake()
     {
         PhotonView = GetComponent<PhotonView>();
+    }
+
+    public void TakeDamage(float damage)
+    {
+        Stat.Health -= damage;
     }
 
     // 데이터 동기화를 위한 데이터 읽기(전송), 쓰기(수신) 메서드이다.

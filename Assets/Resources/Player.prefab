@@ -658,6 +658,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6508871864379605767}
+  - component: {fileID: 8971371290158210827}
+  - component: {fileID: 536555303529260518}
   m_Layer: 6
   m_Name: weapon_r
   m_TagString: Untagged
@@ -681,6 +683,39 @@ Transform:
   - {fileID: 8007022423781019756}
   m_Father: {fileID: 2453676338479414451}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8971371290158210827
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150964035454596192}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.28376496, y: 1.4705703, z: 0.078364715}
+  m_Center: {x: 0.030230086, y: 0.4638361, z: 0.007399473}
+--- !u!114 &536555303529260518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150964035454596192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88dd88748fc88da41be7c6f8fd89276b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponHitAbility
 --- !u!1 &1241696477704116617
 GameObject:
   m_ObjectHideFlags: 0
@@ -3052,6 +3087,7 @@ GameObject:
   - component: {fileID: 4425511591221672342}
   - component: {fileID: -1429326614552769883}
   - component: {fileID: 357125864232356020}
+  - component: {fileID: 7899468191934836187}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -3122,13 +3158,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2
+  m_Height: 1.6
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!114 &4387060825756726525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3185,7 +3221,7 @@ MonoBehaviour:
     MoveSpeed: 7
     JumpPower: 2.5
     RotationSpeed: 100
-    AttackSpeed: 0.8
+    AttackSpeed: 0.4
     SprintSpeed: 10
     Health: 100
     MaxHealth: 100
@@ -3193,6 +3229,7 @@ MonoBehaviour:
     MaxStamina: 100
     JumpNeedStamina: 20
     AttackNeedStamina: 15
+    Damage: 20
   PhotonView: {fileID: 3216564282020904345}
 --- !u!114 &3216564282020904345
 MonoBehaviour:
@@ -3262,6 +3299,15 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 0
     Name: Attack2
+  - Type: 9
+    SynchronizeType: 0
+    Name: Taunt1
+  - Type: 9
+    SynchronizeType: 0
+    Name: Taunt2
+  - Type: 9
+    SynchronizeType: 0
+    Name: Taunt3
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -3292,6 +3338,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 116f4b1bf35fcfc4b8596e5ae6aec466, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerTauntAbility
+--- !u!114 &7899468191934836187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8189980434977739222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62f63e0e3b1e5ef42ade0156a46ac272, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponAbility
+  _collider: {fileID: 8971371290158210827}
 --- !u!1 &8206070634150816031
 GameObject:
   m_ObjectHideFlags: 0
