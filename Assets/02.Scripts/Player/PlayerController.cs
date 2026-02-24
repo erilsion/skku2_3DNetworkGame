@@ -8,12 +8,12 @@ public class PlayerController : MonoBehaviour
     public PlayerStat Stat;
     public PhotonView PhotonView;
 
-    private Dictionary<Type, PlayerAbility> _abilitiesCache = new();
-
     private void Awake()
     {
         PhotonView = GetComponent<PhotonView>();
     }
+
+    private Dictionary<Type, PlayerAbility> _abilitiesCache = new();
 
     public T GetAbility<T>() where T : PlayerAbility
     {
@@ -24,8 +24,7 @@ public class PlayerController : MonoBehaviour
             return ability as T;
         }
 
-        // 게으른 초기화/로딩 -> 처음에 곧바로 초기화/로딩을 하는게 아니라
-        //                    필요할때만 하도록 뒤로 미루는 기법
+        // 게으른 초기화/로딩 -> 처음에 곧바로 초기화/로딩을 하는게 아니라 필요할때만 하도록 뒤로 미루는 기법
         ability = GetComponent<T>();
 
         if (ability != null)
