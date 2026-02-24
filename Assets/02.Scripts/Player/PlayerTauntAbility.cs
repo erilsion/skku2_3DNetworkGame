@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using ExitGames.Client.Photon.StructWrapping;
+using UnityEngine;
 
 public class PlayerTauntAbility : PlayerAbility
 {
     private Animator _animator;
+    private float _movingSpeed = 0.1f;
 
     private void Start()
     {
@@ -11,17 +13,17 @@ public class PlayerTauntAbility : PlayerAbility
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            _animator.Play("Taunt1");
+            _animator.SetTrigger("Taunt1");
         }
-        if (Input.GetKey(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            _animator.Play("Taunt2");
+            _animator.SetTrigger("Taunt2");
         }
-        if (Input.GetKey(KeyCode.Alpha3))
+        if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            _animator.Play("Taunt3");
+            _animator.SetTrigger("Taunt3");
         }
     }
 }
