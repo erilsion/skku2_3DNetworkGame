@@ -17,6 +17,8 @@ public class PlayerStatUI : PlayerAbility
             _healthGauge.color = Color.red;
         }
 
+        if (!_owner.PhotonView.IsMine) return;
+
         _healthGauge.fillAmount = _owner.Stat.Health / _owner.Stat.MaxHealth;
         _staminaGauge.fillAmount = _owner.Stat.Stamina / _owner.Stat.MaxStamina;
     }
