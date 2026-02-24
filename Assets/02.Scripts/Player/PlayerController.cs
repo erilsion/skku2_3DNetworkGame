@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour, IPunObservable, IDamageable
         PhotonView = GetComponent<PhotonView>();
     }
 
+    [PunRPC]
     public void TakeDamage(float damage)
     {
         Stat.Health -= damage;
