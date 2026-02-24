@@ -30,6 +30,8 @@ public class PlayerAttackAbility : PlayerAbility
 
         if (Input.GetMouseButtonDown(0) && _sequentialAttackAnimation)
         {
+            _owner.Stat.Stamina -= _owner.Stat.AttackNeedStamina;
+
             if (_attackAnimationNumber >= _attackAnimationIndex)
             {
                 _attackAnimationNumber = 0;
@@ -41,6 +43,8 @@ public class PlayerAttackAbility : PlayerAbility
 
         if (Input.GetMouseButtonDown(0) && _randomAttackAnimation)
         {
+            _owner.Stat.Stamina -= _owner.Stat.AttackNeedStamina;
+
             _attackAnimationNumber = Random.Range(0, _attackAnimationIndex);
             _animator.SetTrigger($"Attack{_attackAnimationNumber}");
             _attackTimer = 0f;
