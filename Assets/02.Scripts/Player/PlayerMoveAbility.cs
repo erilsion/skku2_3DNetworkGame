@@ -4,6 +4,8 @@ public class PlayerMoveAbility : PlayerAbility
 {
     private const float GRAVITY = 9.8f;
     private float _yVelocity = 0f;
+    private float _staminaRecoverTime = 0f;
+    private float _staminaRecoverCooltime = 0.8f;
 
     private CharacterController _characterController;
     private Animator _animator;
@@ -27,6 +29,8 @@ public class PlayerMoveAbility : PlayerAbility
     {
         if (!_owner.PhotonView.IsMine) return;
 
+        _staminaRecoverTime += Time.deltaTime;
+
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
@@ -37,17 +41,27 @@ public class PlayerMoveAbility : PlayerAbility
         direction = Camera.main.transform.TransformDirection(direction);
 
         _yVelocity -= GRAVITY * Time.deltaTime;
-        direction.y = _yVelocity;
-        if (direction.y < 0)
-        {
-            direction.y = 0f;
-        }
 
         if (Input.GetKey(KeyCode.Space) && _characterController.isGrounded)
         {
             _yVelocity = _owner.Stat.JumpPower;
         }
 
-        _characterController.Move(direction * _owner.Stat.MoveSpeed * Time.deltaTime);
+        direction.y = _yVelocity;
+
+        if (Input.GetKey(KeyCode.LeftShift) && _owner.Stat.Stamina > 0f)
+        {
+            _owner.Stat.Stamina -= _owner.Stat.Stamina * Time.deltaTime;
+            _characterController.Move(direction * Time.deltaTime * _owner.Stat.SprintSpeed);
+            _staminaRecoverTime = 0f;
+        }
+        else
+        {
+            if (_staminaRecoverTime > _staminaRecoverCooltime)
+            {
+                _owner.Stat.Stamina += _owner.Stat.Stamina * Time.deltaTime;
+            }
+            _characterController.Move(direction * Time.deltaTime * _owner.Stat.MoveSpeed);
+        }
     }
 }
