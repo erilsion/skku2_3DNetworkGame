@@ -9,5 +9,10 @@ public class PlayerStat
     public float AttackSpeed;
     public float SprintSpeed;
     public float Health;
+    public float MaxHealth;
     public float Stamina;
+    public float MaxStamina;
+    public float JumpNeedStamina;
+    public float AttackNeedStamina;
+    public float Damage;
 }

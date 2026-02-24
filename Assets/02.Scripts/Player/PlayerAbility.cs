@@ -6,6 +6,6 @@ public class PlayerAbility : MonoBehaviour
 
     protected virtual void Awake()
     {
-        _owner = GetComponent<PlayerController>();
+        _owner = GetComponentInParent<PlayerController>();
     }
 }

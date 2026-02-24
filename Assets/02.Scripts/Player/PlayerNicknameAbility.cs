@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerNicknameAbility : PlayerAbility
 {
-    [SerializeField] private TextMeshPro _nicknameTextUI;
+    [SerializeField] private TextMeshProUGUI _nicknameTextUI;
     
     private void Start()
     {

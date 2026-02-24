@@ -14,6 +14,8 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
     private string _version = "0.0.1";
     private string _nickname = "User";
 
+    private Vector3 _spawnPosition = new Vector3(-4, 3, -36);
+
     private void Start()
     {
         _nickname += $"_{UnityEngine.Random.Range(100, 999)}";
@@ -79,7 +81,7 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
 
         // 리소스 폴더에서 "Player" 이름을 가진 프리팹을 생성(인스턴스화)하고, 서버에 등록도 한다.
         // ㄴ 리소스 폴더는 나쁜 것이다. 그렇기 때문에 다른 방법을 찾아보자.
-        PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
+        PhotonNetwork.Instantiate("Player", _spawnPosition, Quaternion.identity);
     }
 
     // 랜덤 방 입장에 실패하면 자동으로 호출되는 콜백 함수
