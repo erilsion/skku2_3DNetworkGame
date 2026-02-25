@@ -3309,9 +3309,6 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 0
     Name: Attack3
-  - Type: 4
-    SynchronizeType: 0
-    Name: IsDeath
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -3367,7 +3364,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0b698b9d9bf0d74781839adec6533d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDeathAbility
-  _respawnCooltime: 5
 --- !u!1 &8206070634150816031
 GameObject:
   m_ObjectHideFlags: 0
