@@ -39,13 +39,14 @@ public class PlayerDeathAbility : PlayerAbility
 
         yield return new WaitForSeconds(_respawnCooltime);
 
-        var spawn = PhotonServerManager.Instance.GetRandomSpawnPoint();
-        _owner.PhotonView.RPC(nameof(RpcRespawn), RpcTarget.All, spawn.position, spawn.rotation);
-
         _controller.Stat.Health = _controller.Stat.MaxHealth;
         _controller.Stat.Stamina = _controller.Stat.MaxStamina;
 
+        Transform spawn = PhotonServerManager.Instance.GetRandomSpawnPoint();
+        _owner.PhotonView.RPC(nameof(RpcRespawn), RpcTarget.All, spawn.position, spawn.rotation);
+
         _owner.PhotonView.RPC(nameof(EnablePlayer), RpcTarget.All);
+
         _respawnCoroutine = null;
     }
 
@@ -66,6 +67,7 @@ public class PlayerDeathAbility : PlayerAbility
     [PunRPC]
     private void RpcRespawn(Vector3 position, Quaternion rotation)
     {
-        transform.SetPositionAndRotation(position, rotation);
+        _owner.transform.position = position;
+        _owner.transform.rotation = rotation;
     }
 }

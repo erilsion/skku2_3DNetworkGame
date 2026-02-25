@@ -49,8 +49,6 @@ public class PlayerController : MonoBehaviour, IPunObservable, IDamageable
             // Debug.Log("전송중");
             stream.SendNext(Stat.Health);   // 현재 체력
             stream.SendNext(Stat.Stamina);  // 현재 스태미너
-            stream.SendNext(transform.position);
-            stream.SendNext(transform.rotation);
         }
         else if (stream.IsReading)
         {
@@ -58,8 +56,6 @@ public class PlayerController : MonoBehaviour, IPunObservable, IDamageable
             // Debug.Log("수신중");
             Stat.Health = (float)stream.ReceiveNext();  // 전송한 순서대로 받아와진다.
             Stat.Stamina = (float)stream.ReceiveNext();
-            transform.position = (Vector3)stream.ReceiveNext();
-            transform.rotation = (Quaternion)stream.ReceiveNext();
         }
     }
 
