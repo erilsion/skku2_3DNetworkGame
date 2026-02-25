@@ -44,7 +44,7 @@ public class PlayerDeathAbility : PlayerAbility
         _controller.Stat.Health = _controller.Stat.MaxHealth;
         _controller.Stat.Stamina = _controller.Stat.MaxStamina;
 
-        Transform spawn = PhotonRoomManager.Instance.GetRandomSpawnPoint();
+        Transform spawn = PlayerSpawner.Instance.GetRandomSpawnPoint();
         _owner.PhotonView.RPC(nameof(RpcRespawn), RpcTarget.All, spawn.position, spawn.rotation);
 
         _owner.PhotonView.RPC(nameof(EnablePlayer), RpcTarget.All);

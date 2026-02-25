@@ -8,9 +8,6 @@ public class PhotonRoomManager : MonoBehaviourPunCallbacks
 {
     public static PhotonRoomManager Instance;
 
-    [Header("스폰 포지션")]
-    [SerializeField] private Transform[] _spawnPoints;
-
     private Room _room;
     public Room Room => _room;
 
@@ -31,8 +28,7 @@ public class PhotonRoomManager : MonoBehaviourPunCallbacks
         OnRoomChanged?.Invoke();
 
         // 스폰 포지션을 지정하고 플레이어를 스폰한다.
-        Transform spawnPoint = GetRandomSpawnPoint();
-        PhotonNetwork.Instantiate("Player", spawnPoint.position, spawnPoint.rotation);
+        PlayerSpawner.Instance.PlayerSpawn();
         // 리소스 폴더에서 "Player" 이름을 가진 프리팹을 생성(인스턴스화)하고, 서버에 등록도 한다.
         // ㄴ 리소스 폴더는 나쁜 것이다. 그렇기 때문에 다른 방법을 찾아보자.
     }
@@ -49,11 +45,5 @@ public class PhotonRoomManager : MonoBehaviourPunCallbacks
     {
         OnRoomChanged?.Invoke();
         OnPlayerLeft?.Invoke(player);
-    }
-
-    public Transform GetRandomSpawnPoint()
-    {
-        int spawnNumber = UnityEngine.Random.Range(0, _spawnPoints.Length);
-        return _spawnPoints[spawnNumber];
     }
 }

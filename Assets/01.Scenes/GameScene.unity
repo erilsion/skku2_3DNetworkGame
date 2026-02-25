@@ -2068,11 +2068,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db6a63a907354214ab550a23573ace0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PhotonRoomManager
-  _spawnPoints:
-  - {fileID: 1987272222}
-  - {fileID: 1168355435}
-  - {fileID: 116906800}
-  - {fileID: 2080012467}
 --- !u!4 &221979214
 Transform:
   m_ObjectHideFlags: 0
@@ -13635,8 +13630,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1590535639}
+  - component: {fileID: 1590535640}
   m_Layer: 0
-  m_Name: PlayerSpawnPoints
+  m_Name: PlayerSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13661,6 +13657,23 @@ Transform:
   - {fileID: 2080012467}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1590535640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590535638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a8123bd386a44749a4da64f6952fc9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSpawner
+  _spawnPoints:
+  - {fileID: 1987272222}
+  - {fileID: 1168355435}
+  - {fileID: 116906800}
+  - {fileID: 2080012467}
 --- !u!1001 &1591501976
 PrefabInstance:
   m_ObjectHideFlags: 0
