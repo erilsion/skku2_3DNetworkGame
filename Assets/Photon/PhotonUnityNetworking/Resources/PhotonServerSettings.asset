@@ -41,6 +41,7 @@ MonoBehaviour:
   - RespawnSpaceship
   - <Update>g__PlayAttackAnimation|7_0
   - TakeDamage
+  - PlayAttackAnimation
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
