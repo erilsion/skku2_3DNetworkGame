@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
 public class PlayerDeathAbility : PlayerAbility
 {
     private PlayerController _controller;
+    private Animator _animator;
+    private PlayerMoveAbility _moveAbility;
     private Coroutine _respawnCoroutine;
 
     [SerializeField] private float _respawnCooltime = 5.0f;
@@ -12,6 +13,9 @@ public class PlayerDeathAbility : PlayerAbility
     private void Start()
     {
         _controller = GetComponent<PlayerController>();
+        _animator = GetComponent<Animator>();
+        _moveAbility = _controller.GetComponent<PlayerMoveAbility>();
+
         _controller.OnDeathEvent += HandleDeath;
     }
 
@@ -22,13 +26,10 @@ public class PlayerDeathAbility : PlayerAbility
 
     private void HandleDeath()
     {
-        if (_owner.PhotonView.IsMine) return;
+        if (!_owner.PhotonView.IsMine) return;
 
-        Debug.Log("사망 처리 시작");
-        if (_respawnCoroutine == null)
-        {
-            _respawnCoroutine = StartCoroutine(RespawnRoutine());
-        }
+        if (_respawnCoroutine != null) return;
+        _respawnCoroutine = StartCoroutine(RespawnRoutine());
     }
 
     private IEnumerator RespawnRoutine()
@@ -42,6 +43,7 @@ public class PlayerDeathAbility : PlayerAbility
         _controller.transform.position = spawn.position;
         _controller.transform.rotation = spawn.rotation;
         _controller.Stat.Health = _controller.Stat.MaxHealth;
+        _controller.Stat.Stamina = _controller.Stat.MaxStamina;
 
         EnablePlayer();
         _respawnCoroutine = null;
@@ -49,12 +51,13 @@ public class PlayerDeathAbility : PlayerAbility
 
     private void DisablePlayer()
     {
-        _controller.enabled = false;
-        // todo.이동, 입력 비활성화 등
+        _animator.SetTrigger("Death");
+        _moveAbility.enabled = false;
     }
 
     private void EnablePlayer()
     {
-        _controller.enabled = true;
+        _animator.ResetTrigger("Death");
+        _moveAbility.enabled = true;
     }
 }

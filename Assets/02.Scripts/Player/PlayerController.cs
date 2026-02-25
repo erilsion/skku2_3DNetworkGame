@@ -19,9 +19,10 @@ public class PlayerController : MonoBehaviour, IPunObservable, IDamageable
     [PunRPC]
     public void TakeDamage(float damage)
     {
+        if (!PhotonView.IsMine) return;
         Stat.Health -= damage;
 
-        if (Stat.Health < 0)
+        if (Stat.Health <= 0)
         {
             Stat.Health = 0;
             OnDeathEvent?.Invoke();

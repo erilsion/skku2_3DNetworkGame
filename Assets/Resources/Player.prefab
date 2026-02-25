@@ -3088,7 +3088,7 @@ GameObject:
   - component: {fileID: -1429326614552769883}
   - component: {fileID: 357125864232356020}
   - component: {fileID: 7899468191934836187}
-  - component: {fileID: 4982085887167302147}
+  - component: {fileID: 5583948401917204620}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -3306,6 +3306,12 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 0
     Name: Taunt3
+  - Type: 9
+    SynchronizeType: 0
+    Name: Attack3
+  - Type: 4
+    SynchronizeType: 0
+    Name: IsDeath
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -3349,7 +3355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponAbility
   _collider: {fileID: 8971371290158210827}
---- !u!114 &4982085887167302147
+--- !u!114 &5583948401917204620
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
