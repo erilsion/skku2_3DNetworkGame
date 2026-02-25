@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UIElements;
 
 // 플레이어의 대표로서 외부와의 소통 또는 어빌리티들을 관리하는 역할이다.
 public class PlayerController : MonoBehaviour, IPunObservable, IDamageable
@@ -25,8 +26,14 @@ public class PlayerController : MonoBehaviour, IPunObservable, IDamageable
         if (Stat.Health <= 0)
         {
             Stat.Health = 0;
-            OnDeathEvent?.Invoke();
+            PhotonView.RPC(nameof(RpcOnDeath), RpcTarget.All);
         }
+    }
+
+    [PunRPC]
+    private void RpcOnDeath()
+    {
+        OnDeathEvent?.Invoke();
     }
 
     // 데이터 동기화를 위한 데이터 읽기(전송), 쓰기(수신) 메서드이다.
@@ -42,6 +49,8 @@ public class PlayerController : MonoBehaviour, IPunObservable, IDamageable
             // Debug.Log("전송중");
             stream.SendNext(Stat.Health);   // 현재 체력
             stream.SendNext(Stat.Stamina);  // 현재 스태미너
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
         }
         else if (stream.IsReading)
         {
@@ -49,6 +58,8 @@ public class PlayerController : MonoBehaviour, IPunObservable, IDamageable
             // Debug.Log("수신중");
             Stat.Health = (float)stream.ReceiveNext();  // 전송한 순서대로 받아와진다.
             Stat.Stamina = (float)stream.ReceiveNext();
+            transform.position = (Vector3)stream.ReceiveNext();
+            transform.rotation = (Quaternion)stream.ReceiveNext();
         }
     }
 

@@ -1,5 +1,6 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
 using System.Collections;
+using UnityEngine;
 
 public class PlayerDeathAbility : PlayerAbility
 {
@@ -34,30 +35,37 @@ public class PlayerDeathAbility : PlayerAbility
 
     private IEnumerator RespawnRoutine()
     {
-        DisablePlayer();
+        _owner.PhotonView.RPC(nameof(DisablePlayer), RpcTarget.All);
 
         yield return new WaitForSeconds(_respawnCooltime);
 
         var spawn = PhotonServerManager.Instance.GetRandomSpawnPoint();
+        _owner.PhotonView.RPC(nameof(RpcRespawn), RpcTarget.All, spawn.position, spawn.rotation);
 
-        _controller.transform.position = spawn.position;
-        _controller.transform.rotation = spawn.rotation;
         _controller.Stat.Health = _controller.Stat.MaxHealth;
         _controller.Stat.Stamina = _controller.Stat.MaxStamina;
 
-        EnablePlayer();
+        _owner.PhotonView.RPC(nameof(EnablePlayer), RpcTarget.All);
         _respawnCoroutine = null;
     }
 
+    [PunRPC]
     private void DisablePlayer()
     {
         _animator.SetTrigger("Death");
         _moveAbility.enabled = false;
     }
 
+    [PunRPC]
     private void EnablePlayer()
     {
         _animator.ResetTrigger("Death");
         _moveAbility.enabled = true;
+    }
+
+    [PunRPC]
+    private void RpcRespawn(Vector3 position, Quaternion rotation)
+    {
+        transform.SetPositionAndRotation(position, rotation);
     }
 }
