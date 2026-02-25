@@ -5,6 +5,7 @@ using System.Collections;
 public class PlayerDeathAbility : PlayerAbility
 {
     private PlayerController _controller;
+    private Coroutine _respawnCoroutine;
 
     [SerializeField] private float _respawnCooltime = 5.0f;
 
@@ -21,11 +22,13 @@ public class PlayerDeathAbility : PlayerAbility
 
     private void HandleDeath()
     {
-        if (!_owner.PhotonView.IsMine) return;
+        if (_owner.PhotonView.IsMine) return;
 
         Debug.Log("사망 처리 시작");
-
-        StartCoroutine(RespawnRoutine());
+        if (_respawnCoroutine == null)
+        {
+            _respawnCoroutine = StartCoroutine(RespawnRoutine());
+        }
     }
 
     private IEnumerator RespawnRoutine()
@@ -41,16 +44,17 @@ public class PlayerDeathAbility : PlayerAbility
         _controller.Stat.Health = _controller.Stat.MaxHealth;
 
         EnablePlayer();
+        _respawnCoroutine = null;
     }
 
     private void DisablePlayer()
     {
-        GetComponent<Collider>().enabled = false;
+        _controller.enabled = false;
         // todo.이동, 입력 비활성화 등
     }
 
     private void EnablePlayer()
     {
-        GetComponent<Collider>().enabled = true;
+        _controller.enabled = true;
     }
 }
