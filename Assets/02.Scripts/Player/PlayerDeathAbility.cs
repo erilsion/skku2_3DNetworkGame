@@ -8,14 +8,16 @@ public class PlayerDeathAbility : PlayerAbility
     private Animator _animator;
     private PlayerMoveAbility _moveAbility;
     private Coroutine _respawnCoroutine;
+    private PhotonTransformView _transformView;
 
-    [SerializeField] private float _respawnCooltime = 5.0f;
+    private float _respawnCooltime = 5.0f;
 
     private void Start()
     {
         _controller = GetComponent<PlayerController>();
         _animator = GetComponent<Animator>();
         _moveAbility = _controller.GetComponent<PlayerMoveAbility>();
+        _transformView = GetComponent<PhotonTransformView>();
 
         _controller.OnDeathEvent += HandleDeath;
     }
@@ -42,7 +44,7 @@ public class PlayerDeathAbility : PlayerAbility
         _controller.Stat.Health = _controller.Stat.MaxHealth;
         _controller.Stat.Stamina = _controller.Stat.MaxStamina;
 
-        Transform spawn = PhotonServerManager.Instance.GetRandomSpawnPoint();
+        Transform spawn = PhotonRoomManager.Instance.GetRandomSpawnPoint();
         _owner.PhotonView.RPC(nameof(RpcRespawn), RpcTarget.All, spawn.position, spawn.rotation);
 
         _owner.PhotonView.RPC(nameof(EnablePlayer), RpcTarget.All);
@@ -67,7 +69,17 @@ public class PlayerDeathAbility : PlayerAbility
     [PunRPC]
     private void RpcRespawn(Vector3 position, Quaternion rotation)
     {
+        if (_transformView != null)
+        {
+            _transformView.enabled = false;
+        }
+
         _owner.transform.position = position;
         _owner.transform.rotation = rotation;
+
+        if (_transformView != null)
+        {
+            _transformView.enabled = true;
+        }
     }
 }
