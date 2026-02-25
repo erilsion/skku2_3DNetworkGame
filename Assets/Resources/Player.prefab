@@ -3088,6 +3088,7 @@ GameObject:
   - component: {fileID: -1429326614552769883}
   - component: {fileID: 357125864232356020}
   - component: {fileID: 7899468191934836187}
+  - component: {fileID: 4982085887167302147}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -3351,6 +3352,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponAbility
   _collider: {fileID: 8971371290158210827}
+--- !u!114 &4982085887167302147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8189980434977739222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b698b9d9bf0d74781839adec6533d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDeathAbility
+  _respawnCooltime: 5
 --- !u!1 &8206070634150816031
 GameObject:
   m_ObjectHideFlags: 0

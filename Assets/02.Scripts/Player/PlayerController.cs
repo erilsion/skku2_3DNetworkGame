@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour, IPunObservable, IDamageable
     public PlayerStat Stat;
     public PhotonView PhotonView;
 
+    public event Action OnDeathEvent;
+
     private void Awake()
     {
         PhotonView = GetComponent<PhotonView>();
@@ -17,7 +19,15 @@ public class PlayerController : MonoBehaviour, IPunObservable, IDamageable
     [PunRPC]
     public void TakeDamage(float damage)
     {
+        if (Stat.Health <= 0) return;
+
         Stat.Health -= damage;
+
+        if (Stat.Health < 0)
+        {
+            Stat.Health = 0;
+            OnDeathEvent?.Invoke();
+        }
     }
 
     // 데이터 동기화를 위한 데이터 읽기(전송), 쓰기(수신) 메서드이다.

@@ -11,11 +11,18 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
     // - 내가 방 입장에 성공/실패했다.
     // - 누군가가 내 방에 들어왔다 등등.
 
+    public static PhotonServerManager Instance;
+
     private string _version = "0.0.1";
     private string _nickname = "User";
 
     [Header("스폰 포지션")]
     [SerializeField] private Transform[] _spawnPoints;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -80,8 +87,12 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
             Debug.Log($"{player.Value.NickName}: {player.Value.ActorNumber}");
         }
 
+        Transform spawnPoint = GetRandomSpawnPoint();
+
         // 스폰 포지션을 지정하고 플레이어를 스폰한다.
-        SpawnPlayer();
+        PhotonNetwork.Instantiate("Player", spawnPoint.position, spawnPoint.rotation);
+        // 리소스 폴더에서 "Player" 이름을 가진 프리팹을 생성(인스턴스화)하고, 서버에 등록도 한다.
+        // ㄴ 리소스 폴더는 나쁜 것이다. 그렇기 때문에 다른 방법을 찾아보자.
     }
 
     // 랜덤 방 입장에 실패하면 자동으로 호출되는 콜백 함수
@@ -106,11 +117,9 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
         Debug.Log($"방 입장에 실패했습니다: {returnCode} - {message}");
     }
 
-    private void SpawnPlayer()
+    public Transform GetRandomSpawnPoint()
     {
         int spawnNumber = Random.Range(0, _spawnPoints.Length);
-        PhotonNetwork.Instantiate("Player", _spawnPoints[spawnNumber].position, _spawnPoints[spawnNumber].rotation);
-        // 리소스 폴더에서 "Player" 이름을 가진 프리팹을 생성(인스턴스화)하고, 서버에 등록도 한다.
-        // ㄴ 리소스 폴더는 나쁜 것이다. 그렇기 때문에 다른 방법을 찾아보자.
+        return _spawnPoints[spawnNumber];
     }
 }
