@@ -18,15 +18,17 @@ public class PlayerController : MonoBehaviour, IPunObservable, IDamageable
     }
 
     [PunRPC]
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, int attackerActorNumber)
     {
-        if (!PhotonView.IsMine) return;
-        Stat.Health -= damage;
-
-        if (Stat.Health <= 0)
+        if (PhotonView.IsMine)
         {
-            Stat.Health = 0;
-            PhotonView.RPC(nameof(RpcOnDeath), RpcTarget.All);
+            Stat.Health -= damage;
+            if (Stat.Health <= 0)
+            {
+                Stat.Health = 0;
+                PhotonView.RPC(nameof(RpcOnDeath), RpcTarget.All);
+                PhotonRoomManager.Instance.OnPlayerDeath(attackerActorNumber);
+            }
         }
     }
 

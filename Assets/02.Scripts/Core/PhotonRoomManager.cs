@@ -1,7 +1,6 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PhotonRoomManager : MonoBehaviourPunCallbacks
@@ -14,6 +13,7 @@ public class PhotonRoomManager : MonoBehaviourPunCallbacks
     public event Action OnRoomChanged;          // 방 정보가 바뀌었을 때.
     public event Action<Player> OnPlayerEnter;  // 플레이어가 들어왔을 때.
     public event Action<Player> OnPlayerLeft;   // 플레이어가 나갔을 때.
+    public event Action<string, string> OnPlayerKilled;
 
     private void Awake()
     {
@@ -45,5 +45,13 @@ public class PhotonRoomManager : MonoBehaviourPunCallbacks
     {
         OnRoomChanged?.Invoke();
         OnPlayerLeft?.Invoke(player);
+    }
+
+    public void OnPlayerDeath(int attackerActorNumber)
+    {
+        string attackerNickname = _room.Players[attackerActorNumber].NickName;
+        string victimNickname = PhotonNetwork.LocalPlayer.NickName;
+
+        OnPlayerKilled?.Invoke(attackerNickname, victimNickname);
     }
 }
