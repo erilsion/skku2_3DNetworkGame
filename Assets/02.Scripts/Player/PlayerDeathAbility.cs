@@ -8,7 +8,6 @@ public class PlayerDeathAbility : PlayerAbility
     private Animator _animator;
     private PlayerMoveAbility _moveAbility;
     private Coroutine _respawnCoroutine;
-    private PhotonTransformView _transformView;
 
     private float _respawnCooltime = 5.0f;
 
@@ -17,7 +16,6 @@ public class PlayerDeathAbility : PlayerAbility
         _controller = GetComponent<PlayerController>();
         _animator = GetComponent<Animator>();
         _moveAbility = _controller.GetComponent<PlayerMoveAbility>();
-        _transformView = GetComponent<PhotonTransformView>();
 
         _controller.OnDeathEvent += HandleDeath;
     }
@@ -41,12 +39,20 @@ public class PlayerDeathAbility : PlayerAbility
 
         yield return new WaitForSeconds(_respawnCooltime);
 
-        _controller.Stat.Health = _controller.Stat.MaxHealth;
-        _controller.Stat.Stamina = _controller.Stat.MaxStamina;
+        if (_owner.PhotonView.IsMine)
+        {
+            _controller.Stat.Health = _controller.Stat.MaxHealth;
+            _controller.Stat.Stamina = _controller.Stat.MaxStamina;
 
-        Transform spawn = PlayerSpawner.Instance.GetRandomSpawnPoint();
-        _owner.PhotonView.RPC(nameof(RpcRespawn), RpcTarget.All, spawn.position, spawn.rotation);
+            Transform spawn = PlayerSpawner.Instance.GetRandomSpawnPoint();
 
+            _controller.enabled = false;
+            _owner.transform.position = spawn.position;
+            _owner.transform.rotation = spawn.rotation;
+            _moveAbility.ResetVelocity();
+            _controller.enabled = true;
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
         _owner.PhotonView.RPC(nameof(EnablePlayer), RpcTarget.All);
 
         _respawnCoroutine = null;
@@ -64,22 +70,5 @@ public class PlayerDeathAbility : PlayerAbility
     {
         _animator.ResetTrigger("Death");
         _moveAbility.enabled = true;
-    }
-
-    [PunRPC]
-    private void RpcRespawn(Vector3 position, Quaternion rotation)
-    {
-        if (_transformView != null)
-        {
-            _transformView.enabled = false;
-        }
-
-        _owner.transform.position = position;
-        _owner.transform.rotation = rotation;
-
-        if (_transformView != null)
-        {
-            _transformView.enabled = true;
-        }
     }
 }

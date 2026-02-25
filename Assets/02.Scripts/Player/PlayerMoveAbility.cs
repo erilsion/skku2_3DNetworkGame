@@ -60,4 +60,8 @@ public class PlayerMoveAbility : PlayerAbility
             _characterController.Move(direction * Time.deltaTime * _owner.Stat.MoveSpeed);
         }
     }
+    public void ResetVelocity()
+    {
+        _yVelocity = 0f;
+    }
 }

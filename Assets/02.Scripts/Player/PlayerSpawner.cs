@@ -21,7 +21,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
 
     public Transform GetRandomSpawnPoint()
     {
-        int spawnNumber = UnityEngine.Random.Range(0, _spawnPoints.Length);
+        int spawnNumber = Random.Range(0, _spawnPoints.Length);
         return _spawnPoints[spawnNumber];
     }
 }
