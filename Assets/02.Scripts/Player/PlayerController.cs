@@ -26,16 +26,16 @@ public class PlayerController : MonoBehaviour, IPunObservable, IDamageable
             if (Stat.Health <= 0)
             {
                 Stat.Health = 0;
-                PhotonView.RPC(nameof(RpcOnDeath), RpcTarget.All);
-                PhotonRoomManager.Instance.OnPlayerDeath(attackerActorNumber);
+                PhotonView.RPC(nameof(RpcOnDeath), RpcTarget.All, attackerActorNumber);
             }
         }
     }
 
     [PunRPC]
-    private void RpcOnDeath()
+    private void RpcOnDeath(int attackerActorNumber)
     {
         OnDeathEvent?.Invoke();
+        PhotonRoomManager.Instance.OnPlayerDeath(attackerActorNumber);
     }
 
     // 데이터 동기화를 위한 데이터 읽기(전송), 쓰기(수신) 메서드이다.
