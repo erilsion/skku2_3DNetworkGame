@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerDeathAbility : PlayerAbility
 {
     private PlayerController _controller;
+    private CharacterController _characterController;
     private Animator _animator;
     private PlayerMoveAbility _moveAbility;
     private Coroutine _respawnCoroutine;
@@ -16,6 +17,7 @@ public class PlayerDeathAbility : PlayerAbility
         _controller = GetComponent<PlayerController>();
         _animator = GetComponent<Animator>();
         _moveAbility = _controller.GetComponent<PlayerMoveAbility>();
+        _characterController = GetComponent<CharacterController>();
 
         _controller.OnDeathEvent += HandleDeath;
     }
@@ -46,11 +48,10 @@ public class PlayerDeathAbility : PlayerAbility
 
             Transform spawn = PlayerSpawner.Instance.GetRandomSpawnPoint();
 
-            _controller.enabled = false;
+            _characterController.enabled = false;
             _owner.transform.position = spawn.position;
             _owner.transform.rotation = spawn.rotation;
-            _moveAbility.ResetVelocity();
-            _controller.enabled = true;
+            _characterController.enabled = true;
             PhotonNetwork.SendAllOutgoingCommands();
         }
         _owner.PhotonView.RPC(nameof(EnablePlayer), RpcTarget.All);
