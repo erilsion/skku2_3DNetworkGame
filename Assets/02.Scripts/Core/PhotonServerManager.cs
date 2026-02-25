@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using Photon.Pun;
+﻿using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class PhotonServerManager : MonoBehaviourPunCallbacks
 {
@@ -14,11 +14,9 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
     private string _version = "0.0.1";
     private string _nickname = "User";
 
-    private Vector3 _spawnPosition = new Vector3(-4, 3, -36);
-
     private void Start()
     {
-        _nickname += $"_{UnityEngine.Random.Range(100, 999)}";
+        _nickname += $"_{Random.Range(100, 999)}";
 
         PhotonNetwork.GameVersion = _version;
         PhotonNetwork.NickName = _nickname;
@@ -63,25 +61,6 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
 
         // 랜덤 방 입장 시도
         PhotonNetwork.JoinRandomRoom();
-    }
-
-    // 방 입장에 성공하면 자동으로 호출되는 콜백 함수
-    public override void OnJoinedRoom()
-    {
-        Debug.Log("룸 입장 완료");
-        Debug.Log($"룸: {PhotonNetwork.CurrentRoom.Name}");
-        Debug.Log($"플레이어 인원: {PhotonNetwork.CurrentRoom.PlayerCount}");
-
-        // 룸에 입장한 플레이어 정보
-        Dictionary<int, Player> roomPlayers = PhotonNetwork.CurrentRoom.Players;
-        foreach(KeyValuePair<int, Player> player in roomPlayers)
-        {
-            Debug.Log($"{player.Value.NickName}: {player.Value.ActorNumber}");
-        }
-
-        // 리소스 폴더에서 "Player" 이름을 가진 프리팹을 생성(인스턴스화)하고, 서버에 등록도 한다.
-        // ㄴ 리소스 폴더는 나쁜 것이다. 그렇기 때문에 다른 방법을 찾아보자.
-        PhotonNetwork.Instantiate("Player", _spawnPosition, Quaternion.identity);
     }
 
     // 랜덤 방 입장에 실패하면 자동으로 호출되는 콜백 함수

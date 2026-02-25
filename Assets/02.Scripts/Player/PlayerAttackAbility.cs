@@ -8,7 +8,7 @@ public class PlayerAttackAbility : PlayerAbility
     [SerializeField] private bool _randomAttackAnimation = false;
 
     private float _attackTimer = 0f;
-    private int _attackAnimationNumber = 0;
+    private int _attackAnimationNumber = 1;
 
     private Animator _animator;
 
@@ -39,28 +39,28 @@ public class PlayerAttackAbility : PlayerAbility
 
         if (Input.GetMouseButtonDown(0) && _sequentialAttackAnimation)
         {
+            if (_attackAnimationNumber > _attackAnimationIndex)
+            {
+                _attackAnimationNumber = 1;
+            }
             _owner.PhotonView.RPC(nameof(PlayAttackAnimation), RpcTarget.All, _attackAnimationNumber);
             _owner.Stat.Stamina -= _owner.Stat.AttackNeedStamina;
-            if (_attackAnimationNumber >= _attackAnimationIndex)
-            {
-                _attackAnimationNumber = 0;
-            }
             _attackAnimationNumber += 1;
             _attackTimer = 0f;
         }
 
         if (Input.GetMouseButtonDown(0) && _randomAttackAnimation)
         {
-            _attackAnimationNumber = Random.Range(0, _attackAnimationIndex);
+            _attackAnimationNumber = Random.Range(1, _attackAnimationIndex);
             _owner.PhotonView.RPC(nameof(PlayAttackAnimation), RpcTarget.All, _attackAnimationNumber);
             _owner.Stat.Stamina -= _owner.Stat.AttackNeedStamina;
             _attackTimer = 0f;
         }
+    }
 
-        [PunRPC]
-        void PlayAttackAnimation(int animationNumber)
-        {
-            _animator.SetTrigger($"Attack{_attackAnimationNumber}");
-        }
+    [PunRPC]
+    void PlayAttackAnimation(int animationNumber)
+    {
+        _animator.SetTrigger($"Attack{animationNumber}");
     }
 }

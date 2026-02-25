@@ -698,7 +698,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -3088,6 +3088,7 @@ GameObject:
   - component: {fileID: -1429326614552769883}
   - component: {fileID: 357125864232356020}
   - component: {fileID: 7899468191934836187}
+  - component: {fileID: 5583948401917204620}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -3292,9 +3293,6 @@ MonoBehaviour:
     Name: Speed
   - Type: 9
     SynchronizeType: 0
-    Name: Attack0
-  - Type: 9
-    SynchronizeType: 0
     Name: Attack1
   - Type: 9
     SynchronizeType: 0
@@ -3308,6 +3306,9 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 0
     Name: Taunt3
+  - Type: 9
+    SynchronizeType: 0
+    Name: Attack3
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -3351,6 +3352,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponAbility
   _collider: {fileID: 8971371290158210827}
+--- !u!114 &5583948401917204620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8189980434977739222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b698b9d9bf0d74781839adec6533d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDeathAbility
 --- !u!1 &8206070634150816031
 GameObject:
   m_ObjectHideFlags: 0
