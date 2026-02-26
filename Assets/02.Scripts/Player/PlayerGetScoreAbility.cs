@@ -1,34 +1,23 @@
-﻿using Photon.Pun;
+﻿using UnityEngine;
 using System;
-using UnityEngine;
 
 public class PlayerGetScoreAbility : PlayerAbility
 {
-    public PlayerStat Stat;
+    public event Action<float> OnGetScoreEvent;
 
-    public event Action<float, float> OnScoreGained;
-    [SerializeField] private TotalScoreUI _totalUI;
+    public float CurrentScore => _owner.Stat.Score;
 
     private void Start()
     {
-        RefreshUI();
+        OnGetScoreEvent?.Invoke(CurrentScore);
     }
 
     public void AddScore(float amount)
     {
         if (!_owner.PhotonView.IsMine || amount <= 0) return;
 
-        Stat.Score += amount;
+        _owner.Stat.Score += amount;
 
-        RefreshUI();
-        OnScoreGained?.Invoke(amount, Stat.Score);
-    }
-
-    private void RefreshUI()
-    {
-        if (_totalUI != null)
-        {
-            _totalUI.SetScore(Stat.Score);
-        }
+        OnGetScoreEvent?.Invoke(CurrentScore);
     }
 }

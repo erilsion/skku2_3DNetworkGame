@@ -55,12 +55,10 @@ public class ItemObjectFactory : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            Debug.Log("방장 템 삭제요구 호출 발생");
             Delete(viewId);
         }
         else
         {
-            Debug.Log("타인 템 삭제요구 호출 발생");
             _photonView.RPC(nameof(Delete), RpcTarget.MasterClient, viewId);
         }
     }
@@ -68,7 +66,6 @@ public class ItemObjectFactory : MonoBehaviour
     [PunRPC]
     private void Delete(int viewId)
     {
-        Debug.Log("템 삭제 호출 발생");
         GameObject objectToDelete = PhotonView.Find(viewId)?.gameObject;
         if (objectToDelete == null) return;
 

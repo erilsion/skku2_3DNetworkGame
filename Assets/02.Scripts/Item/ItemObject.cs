@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class ItemObject : MonoBehaviourPun
 {
-    public event Action<float> OnScoreGained;
+    [SerializeField] private float _itemScore = 100;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             if (!other.GetComponent<PlayerController>().PhotonView.IsMine) return;
-            other.GetComponent<PlayerController>().Stat.Score += 100;
+            other.GetComponent<PlayerGetScoreAbility>().AddScore(_itemScore);
             ItemObjectFactory.Instance.RequestDelete(photonView.ViewID);
         }
     }
