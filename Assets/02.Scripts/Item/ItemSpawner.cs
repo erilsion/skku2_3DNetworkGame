@@ -30,7 +30,7 @@ public class ItemSpawner : MonoBehaviour
     public void ItemSpawn()
     {
         transform.position = GetRandomSpawnPoint();
-        ItemObjectFactory.Instance.RequestMakeScoreItem(transform.position);
+        ItemObjectFactory.Instance.RequestMakeDropScoreItem(transform.position);
     }
 
     public Vector3 GetRandomSpawnPoint()

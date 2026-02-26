@@ -22,17 +22,17 @@ public class ItemObjectFactory : MonoBehaviour
         if (PhotonNetwork.IsMasterClient)
         {
             // 방장이라면 그냥 함수를 호출한다.
-            MakeScoreItems(makePosition);
+            MakeRandomScoreItems(makePosition);
         }
         else
         {
             // 방장이 아니라면 방장의 함수를 호출한다.
-            _photonView.RPC(nameof(MakeScoreItems), RpcTarget.MasterClient, makePosition);
+            _photonView.RPC(nameof(MakeRandomScoreItems), RpcTarget.MasterClient, makePosition);
         }
     }
 
     [PunRPC]
-    private void MakeScoreItems(Vector3 makePosition)
+    private void MakeRandomScoreItems(Vector3 makePosition)
     {
         int randomCount = Random.Range(_minScoreItems, _maxScoreItems);
 
@@ -49,6 +49,26 @@ public class ItemObjectFactory : MonoBehaviour
             // ㄴ 방장을 양도할 수 있다.
             // ㄴ 방장이 게임을 나가면 자동으로 그 다음으로 들어온 사람이 방장이 된다.
         }
+    }
+
+    public void RequestMakeDropScoreItem(Vector3 makePosition)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // 방장이라면 그냥 함수를 호출한다.
+            MakeScoreItem(makePosition);
+        }
+        else
+        {
+            // 방장이 아니라면 방장의 함수를 호출한다.
+            _photonView.RPC(nameof(MakeScoreItem), RpcTarget.MasterClient, makePosition);
+        }
+    }
+
+    [PunRPC]
+    private void MakeScoreItem(Vector3 makePosition)
+    {
+         PhotonNetwork.InstantiateRoomObject("ScoreItem", makePosition, Quaternion.identity);
     }
 
     public void RequestDelete(int viewId)
