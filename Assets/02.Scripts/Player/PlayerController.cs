@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour, IPunObservable, IDamageable
     [PunRPC]
     public void TakeDamage(float damage, int attackerActorNumber)
     {
+        if (Stat.Health <= 0) return;
+
         if (PhotonView.IsMine)
         {
             Stat.Health -= damage;

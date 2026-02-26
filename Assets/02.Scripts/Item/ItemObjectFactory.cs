@@ -13,6 +13,7 @@ public class ItemObjectFactory : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        _photonView = GetComponent<PhotonView>();
     }
 
     // 방장에게 룸 관련해서 뭔가 요청을 할 때는 메서드 명을 Request로 시작하는 게 유지보수가 편하다.
@@ -50,22 +51,25 @@ public class ItemObjectFactory : MonoBehaviour
         }
     }
 
-    public void RequestDelete(int viewID)
+    public void RequestDelete(int viewId)
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            Delete(viewID);
+            Debug.Log("방장 템 삭제요구 호출 발생");
+            Delete(viewId);
         }
         else
         {
-            _photonView.RPC(nameof(Delete), RpcTarget.MasterClient, viewID);
+            Debug.Log("타인 템 삭제요구 호출 발생");
+            _photonView.RPC(nameof(Delete), RpcTarget.MasterClient, viewId);
         }
     }
 
     [PunRPC]
-    public void Delete(int viewID)
+    private void Delete(int viewId)
     {
-        GameObject objectToDelete = PhotonView.Find(viewID)?.gameObject;
+        Debug.Log("템 삭제 호출 발생");
+        GameObject objectToDelete = PhotonView.Find(viewId)?.gameObject;
         if (objectToDelete == null) return;
 
         PhotonNetwork.Destroy(objectToDelete);
