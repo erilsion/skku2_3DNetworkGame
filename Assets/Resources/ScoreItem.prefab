@@ -9784,6 +9784,7 @@ GameObject:
   - component: {fileID: 4948748507481579034}
   - component: {fileID: 7994426185384795058}
   - component: {fileID: 6844616979575329990}
+  - component: {fileID: 8687232143145976538}
   m_Layer: 0
   m_Name: ScoreItem
   m_TagString: Untagged
@@ -9914,3 +9915,15 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 1
+--- !u!114 &8687232143145976538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000012970591572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1a79bf1d8ca7214f835e11033431122, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemObject

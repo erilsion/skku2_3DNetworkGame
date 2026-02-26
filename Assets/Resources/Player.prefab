@@ -3231,6 +3231,7 @@ MonoBehaviour:
     JumpNeedStamina: 20
     AttackNeedStamina: 15
     Damage: 20
+    Score: 0
   PhotonView: {fileID: 3216564282020904345}
 --- !u!114 &3216564282020904345
 MonoBehaviour:

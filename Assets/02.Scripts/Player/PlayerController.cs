@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using UnityEngine.UIElements;
 
 // 플레이어의 대표로서 외부와의 소통 또는 어빌리티들을 관리하는 역할이다.
 public class PlayerController : MonoBehaviour, IPunObservable, IDamageable
@@ -10,10 +9,9 @@ public class PlayerController : MonoBehaviour, IPunObservable, IDamageable
     public PlayerStat Stat;
     public PhotonView PhotonView;
 
-    public event Action OnDeathEvent;
+    private Vector3 _itemDropHeight = new Vector3(0, 2, 0);
 
-    private int _minScoreItems = 3;
-    private int _maxScoreItems = 5;
+    public event Action OnDeathEvent;
 
     private void Awake()
     {
@@ -30,6 +28,7 @@ public class PlayerController : MonoBehaviour, IPunObservable, IDamageable
             {
                 Stat.Health = 0;
                 PhotonView.RPC(nameof(RpcOnDeath), RpcTarget.All, attackerActorNumber);
+                ItemObjectFactory.Instance.RequestMakeScoreItem(transform.position + _itemDropHeight);
             }
         }
     }
@@ -39,7 +38,6 @@ public class PlayerController : MonoBehaviour, IPunObservable, IDamageable
     {
         OnDeathEvent?.Invoke();
         PhotonRoomManager.Instance.OnPlayerDeath(attackerActorNumber);
-        MakeScoreItems();
     }
 
     // 데이터 동기화를 위한 데이터 읽기(전송), 쓰기(수신) 메서드이다.
@@ -87,15 +85,5 @@ public class PlayerController : MonoBehaviour, IPunObservable, IDamageable
         }
 
         throw new Exception($"어빌리티 {type.Name}을 {gameObject.name}에서 찾을 수 없습니다.");
-    }
-
-    private void MakeScoreItems()
-    {
-        int randomCount = UnityEngine.Random.Range(_minScoreItems, _maxScoreItems);
-
-        for (int i = 0; i < randomCount; i++)
-        {
-            PhotonNetwork.Instantiate("ScoreItem", transform.position, Quaternion.identity);
-        }
     }
 }
