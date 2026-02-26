@@ -13,7 +13,7 @@ public class ItemObject : MonoBehaviourPun
         _photonView = GetComponent<PhotonView>();
     }
 
-    private void OnTirggerEnter(Collider other)
+    public void OnTirggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
