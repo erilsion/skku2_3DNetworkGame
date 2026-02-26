@@ -49,4 +49,25 @@ public class ItemObjectFactory : MonoBehaviour
             // ㄴ 방장이 게임을 나가면 자동으로 그 다음으로 들어온 사람이 방장이 된다.
         }
     }
+
+    public void RequestDelete(int viewID)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Delete(viewID);
+        }
+        else
+        {
+            _photonView.RPC(nameof(Delete), RpcTarget.MasterClient, viewID);
+        }
+    }
+
+    [PunRPC]
+    public void Delete(int viewID)
+    {
+        GameObject objectToDelete = PhotonView.Find(viewID)?.gameObject;
+        if (objectToDelete == null) return;
+
+        PhotonNetwork.Destroy(objectToDelete);
+    }
 }

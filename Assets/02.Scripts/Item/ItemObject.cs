@@ -2,17 +2,23 @@
 using System;
 using UnityEngine;
 
-public class ItemObject : MonoBehaviour
+public class ItemObject : MonoBehaviourPun
 {
+    [SerializeField] private PhotonView _photonView;
+
     public event Action<float> OnScoreGained;
 
-    private void OnCollisionEnter(Collision collision)
+    private void Awake()
     {
-        if (collision.gameObject.CompareTag("Player"))
+        _photonView = GetComponent<PhotonView>();
+    }
+
+    private void OnTirggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<PlayerController>().Stat.Score += 100;
-            OnScoreGained?.Invoke(gameObject.GetComponent<PlayerController>().Stat.Score);
-            PhotonNetwork.Destroy(gameObject);
+            other.GetComponent<PlayerController>().Stat.Score += 100;
+            ItemObjectFactory.Instance.RequestDelete(photonView.ViewID);
         }
     }
 }

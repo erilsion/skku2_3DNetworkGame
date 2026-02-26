@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour, IPunObservable, IDamageable
             {
                 Stat.Health = 0;
                 PhotonView.RPC(nameof(RpcOnDeath), RpcTarget.All, attackerActorNumber);
+                GetComponent<CharacterController>().enabled = false;
                 ItemObjectFactory.Instance.RequestMakeScoreItem(transform.position + _itemDropHeight);
             }
         }

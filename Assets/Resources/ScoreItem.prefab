@@ -9785,6 +9785,7 @@ GameObject:
   - component: {fileID: 7994426185384795058}
   - component: {fileID: 6844616979575329990}
   - component: {fileID: 8687232143145976538}
+  - component: {fileID: 4807063986323098120}
   m_Layer: 0
   m_Name: ScoreItem
   m_TagString: Untagged
@@ -9927,3 +9928,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1a79bf1d8ca7214f835e11033431122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemObject
+  _photonView: {fileID: 0}
+--- !u!135 &4807063986323098120
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000012970591572}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 1, z: 0}
