@@ -45,11 +45,11 @@ public class BearPatrolState : BearState
 
     private void Patrol()
     {
-        if (_bear.IsTargetInRange(_bear.Stat.DetectRange))
-        {
-            _bear.ChangeState(EBearStateType.Attack);
-            return;
-        }
+        //if (_bear.IsTargetInRange(_bear.Stat.DetectRange))
+        //{
+        //    _bear.ChangeState(EBearStateType.Attack);
+        //    return;
+        //}
 
         if (_patrolPoints == null || _patrolPoints.Length == 0)
         {

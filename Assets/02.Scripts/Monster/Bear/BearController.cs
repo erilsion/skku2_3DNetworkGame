@@ -7,7 +7,7 @@ public class BearController : MonoBehaviourPunCallbacks
 {
     public BearStat Stat;
 
-    public EBearStateType CurrentStateType { get; private set; }
+    public EBearStateType CurrentStateType { get; private set; } = EBearStateType.None;
     private IBearState _currentState;
     private Dictionary<EBearStateType, IBearState> _states;
 
@@ -37,26 +37,50 @@ public class BearController : MonoBehaviourPunCallbacks
         {
             { EBearStateType.Idle, new BearIdleState(this) },
             { EBearStateType.Patrol, new BearPatrolState(this) },
-            //{ EBearStateType.MoveToTarget, new MoveToTargetState(this) },
-            //{ EBearStateType.Return, new ReturnState(this) },
-            //{ EBearStateType.Attack, new AttackState(this) },
-            //{ EBearStateType.AttackWait, new AttackWaitState(this) },
-            //{ EBearStateType.Hit, new HitState(this) },
-            //{ EBearStateType.Dead, new DeadState(this) }
+            //{ EBearStateType.Trace, new BearTraceState(this) },
+            //{ EBearStateType.Return, new BearReturnState(this) },
+            //{ EBearStateType.Attack, new BearAttackState(this) },
+            //{ EBearStateType.AttackWait, new BearAttackWaitState(this) },
+            //{ EBearStateType.Hit, new BearHitState(this) },
+            //{ EBearStateType.Dead, new BearDeadState(this) }
         };
     }
 
-    void Start()
+    public void Start()
     {
-        if (!PhotonNetwork.IsMasterClient)
+        if (PhotonRoomManager.Instance != null)
+        {
+            PhotonRoomManager.Instance.OnRoomJoined += SetupByMasterState;
+            PhotonRoomManager.Instance.OnMasterClientChanged += SetupByMasterState;
+        }
+    }
+
+    public override void OnDisable()
+    {
+        if (PhotonRoomManager.Instance != null)
+        {
+            PhotonRoomManager.Instance.OnRoomJoined -= SetupByMasterState;
+            PhotonRoomManager.Instance.OnMasterClientChanged -= SetupByMasterState;
+        }
+    }
+
+    private void SetupByMasterState()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            _agent.enabled = true;
+            _agent.updatePosition = true;
+            _agent.updateRotation = true;
+
+            _agent.speed = Stat.MoveSpeed;
+            ChangeState(EBearStateType.Idle);
+        }
+        else
         {
             _agent.enabled = false;
             _agent.updatePosition = false;
             _agent.updateRotation = false;
-            return;
         }
-        _agent.speed = Stat.MoveSpeed;
-        ChangeState(EBearStateType.None);
     }
 
     void Update()

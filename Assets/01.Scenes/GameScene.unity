@@ -5747,8 +5747,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
   m_SerializedVersion: 0
   m_AgentTypeID: -1372625422
-  m_CollectObjects: 2
-  m_Size: {x: 10, y: 10, z: 10}
+  m_CollectObjects: 1
+  m_Size: {x: 100, y: 10, z: 100}
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
@@ -6840,16 +6840,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2784126631251126336, guid: 37ddc7feb666b3a4b85fcc535cf1a4d9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2784126631251126336, guid: 37ddc7feb666b3a4b85fcc535cf1a4d9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4149546594218635746, guid: 37ddc7feb666b3a4b85fcc535cf1a4d9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -18
+      value: -16
+      objectReference: {fileID: 0}
+    - target: {fileID: 4149546594218635746, guid: 37ddc7feb666b3a4b85fcc535cf1a4d9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 4914225215276193463, guid: 37ddc7feb666b3a4b85fcc535cf1a4d9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8
+      value: -9
       objectReference: {fileID: 0}
     - target: {fileID: 4914225215276193463, guid: 37ddc7feb666b3a4b85fcc535cf1a4d9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6861,7 +6869,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7292658344771522932, guid: 37ddc7feb666b3a4b85fcc535cf1a4d9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -24
+      value: -22
       objectReference: {fileID: 0}
     - target: {fileID: 7292658344771522932, guid: 37ddc7feb666b3a4b85fcc535cf1a4d9, type: 3}
       propertyPath: m_LocalPosition.y
