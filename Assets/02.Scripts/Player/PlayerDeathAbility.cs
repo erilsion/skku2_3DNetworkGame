@@ -10,7 +10,7 @@ public class PlayerDeathAbility : PlayerAbility
     private PlayerMoveAbility _moveAbility;
     private Coroutine _respawnCoroutine;
 
-    private float _respawnCooltime = 5.0f;
+    private float _respawnCooltime = 3.0f;
 
     private void Start()
     {

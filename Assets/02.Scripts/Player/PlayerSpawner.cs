@@ -16,7 +16,16 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
     public void PlayerSpawn()
     {
         Transform spawnPoint = GetRandomSpawnPoint();
-        PhotonNetwork.Instantiate("Player", spawnPoint.position, spawnPoint.rotation);
+
+        GameObject player = PhotonNetwork.Instantiate("Player", spawnPoint.position, spawnPoint.rotation);
+
+        // 로컬 플레이어만 UI를 연결한다.
+        PhotonView photonView = player.GetComponent<PhotonView>();
+        if (!photonView.IsMine) return;
+
+        PlayerGetScoreAbility ability = player.GetComponent<PlayerGetScoreAbility>();
+
+        ScoreManager.Instance.Register(ability);
     }
 
     public Transform GetRandomSpawnPoint()

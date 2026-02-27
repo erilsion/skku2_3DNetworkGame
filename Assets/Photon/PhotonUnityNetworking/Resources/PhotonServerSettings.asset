@@ -46,6 +46,12 @@ MonoBehaviour:
   - RpcRespawn
   - DisablePlayer
   - EnablePlayer
+  - MakeScoreItems
+  - Delete
+  - MakeRandomScoreItems
+  - MakeScoreItem
+  - RPCOnTakeDamage
+  - SyncState
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

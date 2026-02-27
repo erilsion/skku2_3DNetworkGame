@@ -14,6 +14,8 @@ public class PhotonRoomManager : MonoBehaviourPunCallbacks
     public event Action<Player> OnPlayerEnter;  // 플레이어가 들어왔을 때.
     public event Action<Player> OnPlayerLeft;   // 플레이어가 나갔을 때.
     public event Action<string, string> OnPlayerKilled;
+    public event Action OnRoomJoined;
+    public event Action OnMasterClientChanged;
 
     private void Awake()
     {
@@ -26,6 +28,7 @@ public class PhotonRoomManager : MonoBehaviourPunCallbacks
         _room = PhotonNetwork.CurrentRoom;
 
         OnRoomChanged?.Invoke();
+        OnRoomJoined?.Invoke();
 
         // 스폰 포지션을 지정하고 플레이어를 스폰한다.
         PlayerSpawner.Instance.PlayerSpawn();
@@ -53,5 +56,10 @@ public class PhotonRoomManager : MonoBehaviourPunCallbacks
         string victimNickname = PhotonNetwork.LocalPlayer.NickName;
 
         OnPlayerKilled?.Invoke(attackerNickname, victimNickname);
+    }
+
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        OnMasterClientChanged?.Invoke();
     }
 }
