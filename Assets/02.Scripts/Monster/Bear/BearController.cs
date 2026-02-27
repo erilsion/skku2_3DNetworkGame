@@ -11,8 +11,16 @@ public class BearController : MonoBehaviourPunCallbacks
     private IBearState _currentState;
     private Dictionary<EBearStateType, IBearState> _states;
 
+    [Header("곰 에이전트")]
     [SerializeField] private NavMeshAgent _agent;
+
+    [Header("추격 대상")]
     [SerializeField] private Transform _target;
+
+    [Header("순찰 지점 루트")]
+    [SerializeField] private Transform _patrolPointRoot;
+
+    public Transform[] PatrolPoints { get; private set; }
 
     public NavMeshAgent Agent => _agent;
     public Vector3 TargetPosition => _target.position;
@@ -23,6 +31,8 @@ public class BearController : MonoBehaviourPunCallbacks
 
     void Awake()
     {
+        InitPatrolPoints();
+
         _states = new Dictionary<EBearStateType, IBearState>
         {
             { EBearStateType.Idle, new BearIdleState(this) },
@@ -45,7 +55,7 @@ public class BearController : MonoBehaviourPunCallbacks
             _agent.updateRotation = false;
             return;
         }
-
+        _agent.speed = Stat.MoveSpeed;
         ChangeState(EBearStateType.None);
     }
 
@@ -108,6 +118,25 @@ public class BearController : MonoBehaviourPunCallbacks
 
             _currentState = null;   // 상태를 강제로 초기화한다.
             ChangeState(CurrentStateType);
+        }
+    }
+
+    private void InitPatrolPoints()
+    {
+        if (_patrolPointRoot == null)
+        {
+            // Transform root = transform.Find("PatrolPoints"); 인스펙터 지정 빼고 싶으면 사용하기.
+            Debug.LogWarning("순찰 지점 루트가 연결되지 않았습니다.");
+            PatrolPoints = new Transform[0];
+            return;
+        }
+
+        int childCount = _patrolPointRoot.childCount;
+        PatrolPoints = new Transform[childCount];
+
+        for (int i = 0; i < childCount; i++)
+        {
+            PatrolPoints[i] = _patrolPointRoot.GetChild(i);
         }
     }
 }

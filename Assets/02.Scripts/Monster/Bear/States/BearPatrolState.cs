@@ -3,12 +3,11 @@
 public class BearPatrolState : BearState
 {
     [Header("순찰 포지션")]
-    [SerializeField] private Transform[] _patrolPoints;
+    private Transform[] _patrolPoints;
 
     [Header("순찰 지점 대기 시간")]
-    [SerializeField] private float _minPatrolWaitTime = 2f;
-    [SerializeField] private float _maxPatrolWaitTime = 6f;
-
+    private float _minPatrolWaitTime = 2f;
+    private float _maxPatrolWaitTime = 6f;
     private float _patrolWaitTime;
 
     private int _currentPatrolIndex = 0;
@@ -23,6 +22,14 @@ public class BearPatrolState : BearState
     public override void Enter()
     {
         Debug.Log("Patrol 상태 돌입");
+        _patrolPoints = _bear.PatrolPoints;
+
+        if (_patrolPoints == null || _patrolPoints.Length == 0)
+        {
+            _bear.ChangeState(EBearStateType.Idle);
+            return;
+        }
+
         _patrolWaitTime = SetPatrolWaitTime();
     }
 
