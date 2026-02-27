@@ -1,12 +1,11 @@
-﻿using Unity.VisualScripting;
-
+﻿
 public abstract class BearState : IBearState
 {
-    protected BearController bear;
+    protected BearController _bear;
 
     public BearState(BearController bear)
     {
-        this.bear = bear;
+        this._bear = bear;
     }
 
     public virtual void Enter() { }

@@ -1988,6 +1988,9 @@ MonoBehaviour:
     Health: 100
     MaxHealth: 100
     Damage: 20
+    DetectRange: 10
+  _agent: {fileID: 0}
+  _target: {fileID: 7292658344771522932}
 --- !u!114 &5723695050355702265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2008,6 +2011,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 7057454005137584486}
+  - {fileID: 235130778585773311}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -2041,8 +2045,121 @@ MonoBehaviour:
   m_EditorClassIdentifier: PhotonUnityNetworking::Photon.Pun.PhotonAnimatorView
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
-  m_SynchronizeLayers: []
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 0
+    Name: Idle
+  - Type: 4
+    SynchronizeType: 0
+    Name: Combat Idle
+  - Type: 4
+    SynchronizeType: 0
+    Name: Run Forward
+  - Type: 4
+    SynchronizeType: 0
+    Name: Run Left
+  - Type: 4
+    SynchronizeType: 0
+    Name: Strafe Left
+  - Type: 4
+    SynchronizeType: 0
+    Name: Run Backward Left
+  - Type: 4
+    SynchronizeType: 0
+    Name: Run Backward
+  - Type: 4
+    SynchronizeType: 0
+    Name: Run Backward Right
+  - Type: 4
+    SynchronizeType: 0
+    Name: Strafe Right
+  - Type: 4
+    SynchronizeType: 0
+    Name: Run Right
+  - Type: 4
+    SynchronizeType: 0
+    Name: WalkBackward
+  - Type: 4
+    SynchronizeType: 0
+    Name: WalkBackwardLeft
+  - Type: 4
+    SynchronizeType: 0
+    Name: WalkBackwardRight
+  - Type: 4
+    SynchronizeType: 0
+    Name: WalkForward
+  - Type: 4
+    SynchronizeType: 0
+    Name: WalkForwardLeft
+  - Type: 4
+    SynchronizeType: 0
+    Name: WalkForwardRight
+  - Type: 4
+    SynchronizeType: 0
+    Name: CirclingLeft
+  - Type: 4
+    SynchronizeType: 0
+    Name: CirclingRight
+  - Type: 9
+    SynchronizeType: 0
+    Name: Jump
+  - Type: 9
+    SynchronizeType: 0
+    Name: Attack1
+  - Type: 9
+    SynchronizeType: 0
+    Name: Attack2
+  - Type: 9
+    SynchronizeType: 0
+    Name: Attack3
+  - Type: 9
+    SynchronizeType: 0
+    Name: Attack4
+  - Type: 9
+    SynchronizeType: 0
+    Name: Attack5
+  - Type: 9
+    SynchronizeType: 0
+    Name: Attack6
+  - Type: 9
+    SynchronizeType: 0
+    Name: Attack7
+  - Type: 9
+    SynchronizeType: 0
+    Name: Attack8
+  - Type: 9
+    SynchronizeType: 0
+    Name: Buff
+  - Type: 9
+    SynchronizeType: 0
+    Name: Get Hit Front
+  - Type: 9
+    SynchronizeType: 0
+    Name: Get Hit Back
+  - Type: 9
+    SynchronizeType: 0
+    Name: Get Hit Left
+  - Type: 9
+    SynchronizeType: 0
+    Name: Get Hit Right
+  - Type: 4
+    SynchronizeType: 0
+    Name: Stunned Loop
+  - Type: 4
+    SynchronizeType: 0
+    Name: Eat
+  - Type: 4
+    SynchronizeType: 0
+    Name: Sit
+  - Type: 4
+    SynchronizeType: 0
+    Name: Sleep
+  - Type: 4
+    SynchronizeType: 0
+    Name: Death
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
 --- !u!1 &8002475675295336084
 GameObject:
   m_ObjectHideFlags: 0

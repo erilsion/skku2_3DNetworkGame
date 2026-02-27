@@ -9,4 +9,5 @@ public class BearStat
     public float Health;
     public float MaxHealth;
     public float Damage;
+    public float DetectRange;
 }

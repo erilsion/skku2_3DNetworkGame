@@ -1,8 +1,5 @@
 ﻿using Photon.Pun;
 using System.Collections.Generic;
-using System.Xml;
-using Unity.IO.LowLevel.Unsafe;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,15 +11,22 @@ public class BearController : MonoBehaviourPunCallbacks
     private IBearState _currentState;
     private Dictionary<EBearStateType, IBearState> _states;
 
-    public NavMeshAgent Agent;
-    public Transform Target;
+    [SerializeField] private NavMeshAgent _agent;
+    [SerializeField] private Transform _target;
+
+    public NavMeshAgent Agent => _agent;
+    public Vector3 TargetPosition => _target.position;
+    public bool IsTargetInRange(float range)
+    {
+        return Vector3.Distance(transform.position, _target.position) <= range;
+    }
 
     void Awake()
     {
         _states = new Dictionary<EBearStateType, IBearState>
         {
-            //{ EBearStateType.Idle, new IdleState(this) },
-            //{ EBearStateType.Patrol, new PatrolState(this) },
+            { EBearStateType.Idle, new BearIdleState(this) },
+            { EBearStateType.Patrol, new BearPatrolState(this) },
             //{ EBearStateType.MoveToTarget, new MoveToTargetState(this) },
             //{ EBearStateType.Return, new ReturnState(this) },
             //{ EBearStateType.Attack, new AttackState(this) },
@@ -36,9 +40,9 @@ public class BearController : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.IsMasterClient)
         {
-            Agent.enabled = false;
-            Agent.updatePosition = false;
-            Agent.updateRotation = false;
+            _agent.enabled = false;
+            _agent.updatePosition = false;
+            _agent.updateRotation = false;
             return;
         }
 
@@ -98,9 +102,9 @@ public class BearController : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            Agent.enabled = true;
-            Agent.updatePosition = true;
-            Agent.updateRotation = true;
+            _agent.enabled = true;
+            _agent.updatePosition = true;
+            _agent.updateRotation = true;
 
             _currentState = null;   // 상태를 강제로 초기화한다.
             ChangeState(CurrentStateType);
