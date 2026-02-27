@@ -20,7 +20,7 @@ public class BearController : MonoBehaviourPunCallbacks
     [Header("순찰 지점 루트")]
     [SerializeField] private Transform _patrolPointRoot;
 
-    public Transform[] PatrolPoints { get; private set; }
+    public Vector3[] PatrolPositions { get; private set; }
 
     public NavMeshAgent Agent => _agent;
     public Vector3 TargetPosition => _target.position;
@@ -151,16 +151,16 @@ public class BearController : MonoBehaviourPunCallbacks
         {
             // Transform root = transform.Find("PatrolPoints"); 인스펙터 지정 빼고 싶으면 사용하기.
             Debug.LogWarning("순찰 지점 루트가 연결되지 않았습니다.");
-            PatrolPoints = new Transform[0];
+            PatrolPositions = new Vector3[0];
             return;
         }
 
         int childCount = _patrolPointRoot.childCount;
-        PatrolPoints = new Transform[childCount];
+        PatrolPositions = new Vector3[childCount];
 
         for (int i = 0; i < childCount; i++)
         {
-            PatrolPoints[i] = _patrolPointRoot.GetChild(i);
+            PatrolPositions[i] = _patrolPointRoot.GetChild(i).position;
         }
     }
 }

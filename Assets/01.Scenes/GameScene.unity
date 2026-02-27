@@ -6841,11 +6841,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2784126631251126336, guid: 37ddc7feb666b3a4b85fcc535cf1a4d9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2784126631251126336, guid: 37ddc7feb666b3a4b85fcc535cf1a4d9, type: 3}
       propertyPath: m_LocalPosition.z
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734775969355451150, guid: 37ddc7feb666b3a4b85fcc535cf1a4d9, type: 3}
+      propertyPath: m_Controller
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4149546594218635746, guid: 37ddc7feb666b3a4b85fcc535cf1a4d9, type: 3}
       propertyPath: m_LocalPosition.x
