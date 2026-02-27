@@ -34,6 +34,7 @@ public class PlayerRegistry : MonoBehaviour
             PhotonRoomManager.Instance.OnRoomJoined -= RegisterExistingPlayers;
             PhotonRoomManager.Instance.OnPlayerEnter -= HandlePlayerEnter;
             PhotonRoomManager.Instance.OnPlayerLeft -= HandlePlayerLeft;
+            PhotonRoomManager.Instance.OnMasterClientChanged -= RebuildRegistry;
         }
     }
 
@@ -86,6 +87,8 @@ public class PlayerRegistry : MonoBehaviour
 
     public Transform GetClosestPlayer(Vector3 position)
     {
+        if (!PhotonNetwork.IsMasterClient) return null;
+        
         float minDistance = float.MaxValue;
         Transform closest = null;
 
@@ -112,6 +115,8 @@ public class PlayerRegistry : MonoBehaviour
     public void Unregister(PlayerNetworkIdentity identity)
     {
         if (_players.ContainsKey(identity.ActorNumber))
+        {
             _players.Remove(identity.ActorNumber);
+        }
     }
 }

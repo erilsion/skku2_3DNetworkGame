@@ -6,7 +6,7 @@ public class PlayerNetworkIdentity : MonoBehaviourPun
     public int ActorNumber => photonView.Owner.ActorNumber;
     private void Start()
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (photonView.IsMine)
         {
             PlayerRegistry.Instance.Register(this);
         }

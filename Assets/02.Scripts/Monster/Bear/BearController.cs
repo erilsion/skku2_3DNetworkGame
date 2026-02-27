@@ -166,4 +166,21 @@ public class BearController : MonoBehaviourPunCallbacks
 
         _target = PlayerRegistry.Instance.GetClosestPlayer(transform.position);
     }
+
+    public bool IsTargetInDetectRange()
+    {
+        if (!PhotonNetwork.IsMasterClient) return false;
+
+        FindClosestTarget();
+
+        if (_target == null) return false;
+
+        Vector3 bearPosition = transform.position;
+        Vector3 targetPosition = _target.position;
+
+        float distance = Vector3.Distance(new Vector3(bearPosition.x, 0, bearPosition.z),
+                         new Vector3(targetPosition.x, 0, targetPosition.z));
+
+        return distance <= Stat.DetectRange;
+    }
 }
