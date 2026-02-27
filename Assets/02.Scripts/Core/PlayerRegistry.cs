@@ -23,6 +23,7 @@ public class PlayerRegistry : MonoBehaviour
             PhotonRoomManager.Instance.OnRoomJoined += RegisterExistingPlayers;
             PhotonRoomManager.Instance.OnPlayerEnter += HandlePlayerEnter;
             PhotonRoomManager.Instance.OnPlayerLeft += HandlePlayerLeft;
+            PhotonRoomManager.Instance.OnMasterClientChanged += RebuildRegistry;
         }
     }
 
@@ -71,10 +72,16 @@ public class PlayerRegistry : MonoBehaviour
         }
     }
 
-    public Transform GetPlayerTransform(int actorNumber)
+    private void RebuildRegistry()
     {
-        _players.TryGetValue(actorNumber, out Transform result);
-        return result;
+        _players.Clear();
+
+        var identities = FindObjectsByType<PlayerNetworkIdentity>(FindObjectsSortMode.None);
+
+        foreach (var identity in identities)
+        {
+            _players[identity.ActorNumber] = identity.transform;
+        }
     }
 
     public Transform GetClosestPlayer(Vector3 position)
@@ -95,5 +102,16 @@ public class PlayerRegistry : MonoBehaviour
         }
 
         return closest;
+    }
+
+    public void Register(PlayerNetworkIdentity identity)
+    {
+        _players[identity.ActorNumber] = identity.transform;
+    }
+
+    public void Unregister(PlayerNetworkIdentity identity)
+    {
+        if (_players.ContainsKey(identity.ActorNumber))
+            _players.Remove(identity.ActorNumber);
     }
 }
