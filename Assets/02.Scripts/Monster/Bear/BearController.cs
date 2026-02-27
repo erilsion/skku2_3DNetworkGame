@@ -35,7 +35,7 @@ public class BearController : MonoBehaviourPunCallbacks
             { EBearStateType.Idle, new BearIdleState(this) },
             { EBearStateType.Patrol, new BearPatrolState(this) },
             { EBearStateType.Trace, new BearTraceState(this) },
-            //{ EBearStateType.Comeback, new BearComebackState(this) },
+            { EBearStateType.Comeback, new BearComebackState(this) },
             //{ EBearStateType.Attack, new BearAttackState(this) },
             //{ EBearStateType.AttackWait, new BearAttackWaitState(this) },
             //{ EBearStateType.Hit, new BearHitState(this) },

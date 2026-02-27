@@ -37,10 +37,10 @@ public class BearTraceState : BearState
         //    _bear.ChangeState(EBearStateType.Attack);
         //    return;
         //}
-        //else if (!_bear.Agent.pathPending && _bear.Agent.remainingDistance > ComebackRange)
-        //{
-        //    _bear.ChangeState(EBearStateType.Comeback);
-        //    return;
-        //}
+        if (!_bear.Agent.pathPending && _bear.Agent.remainingDistance > _bear.Stat.ComebackRange)
+        {
+            _bear.ChangeState(EBearStateType.Comeback);
+            return;
+        }
     }
 }
