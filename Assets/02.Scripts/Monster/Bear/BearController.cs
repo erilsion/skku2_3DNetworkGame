@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -11,23 +12,19 @@ public class BearController : MonoBehaviourPunCallbacks
     private IBearState _currentState;
     private Dictionary<EBearStateType, IBearState> _states;
 
+    public NavMeshAgent Agent => _agent;
+
     [Header("곰 에이전트")]
     [SerializeField] private NavMeshAgent _agent;
-
-    [Header("추격 대상")]
-    [SerializeField] private Transform _target;
 
     [Header("순찰 지점 루트")]
     [SerializeField] private Transform _patrolPointRoot;
 
     public Vector3[] PatrolPositions { get; private set; }
 
-    public NavMeshAgent Agent => _agent;
-    public Vector3 TargetPosition => _target.position;
-    public bool IsTargetInRange(float range)
-    {
-        return Vector3.Distance(transform.position, _target.position) <= range;
-    }
+    private Transform _target;
+    public Transform Target => _target;
+
 
     void Awake()
     {
@@ -37,8 +34,8 @@ public class BearController : MonoBehaviourPunCallbacks
         {
             { EBearStateType.Idle, new BearIdleState(this) },
             { EBearStateType.Patrol, new BearPatrolState(this) },
-            //{ EBearStateType.Trace, new BearTraceState(this) },
-            //{ EBearStateType.Return, new BearReturnState(this) },
+            { EBearStateType.Trace, new BearTraceState(this) },
+            //{ EBearStateType.Comeback, new BearComebackState(this) },
             //{ EBearStateType.Attack, new BearAttackState(this) },
             //{ EBearStateType.AttackWait, new BearAttackWaitState(this) },
             //{ EBearStateType.Hit, new BearHitState(this) },
@@ -149,7 +146,6 @@ public class BearController : MonoBehaviourPunCallbacks
     {
         if (_patrolPointRoot == null)
         {
-            // Transform root = transform.Find("PatrolPoints"); 인스펙터 지정 빼고 싶으면 사용하기.
             Debug.LogWarning("순찰 지점 루트가 연결되지 않았습니다.");
             PatrolPositions = new Vector3[0];
             return;
@@ -162,5 +158,12 @@ public class BearController : MonoBehaviourPunCallbacks
         {
             PatrolPositions[i] = _patrolPointRoot.GetChild(i).position;
         }
+    }
+
+    public void FindClosestTarget()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        _target = PlayerRegistry.Instance.GetClosestPlayer(transform.position);
     }
 }

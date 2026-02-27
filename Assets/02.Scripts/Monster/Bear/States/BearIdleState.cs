@@ -29,6 +29,15 @@ public class BearIdleState : BearState
 
     private void Idle()
     {
+        _bear.FindClosestTarget();
+
+        if (_bear.Target != null &&
+            Vector3.Distance(_bear.transform.position, _bear.Target.position) <= _bear.Stat.DetectRange)
+        {
+            _bear.ChangeState(EBearStateType.Trace);
+            return;
+        }
+
         _idleToPatrolTimer += Time.deltaTime;
         if (_idleToPatrolTimer >= _idleToPatrolDelay)
         {

@@ -47,7 +47,7 @@ public class BearPatrolState : BearState
     {
         //if (_bear.IsTargetInRange(_bear.Stat.DetectRange))
         //{
-        //    _bear.ChangeState(EBearStateType.Attack);
+        //    _bear.ChangeState(EBearStateType.Trace);
         //    return;
         //}
 

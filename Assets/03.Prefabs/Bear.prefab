@@ -2119,8 +2119,9 @@ MonoBehaviour:
     MaxHealth: 100
     Damage: 20
     DetectRange: 10
+    ComebackRange: 16
+    AttackRange: 5
   _agent: {fileID: 7445226861726062465}
-  _target: {fileID: 7292658344771522932}
   _patrolPointRoot: {fileID: 2819229068116337976}
 --- !u!114 &5723695050355702265
 MonoBehaviour:
