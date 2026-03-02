@@ -2,6 +2,8 @@
 
 public class BearAttackWaitState : BearState
 {
+    private float _attackTimer = 0f;
+
     public BearAttackWaitState(BearController bear) : base(bear)
     {
 
@@ -9,6 +11,7 @@ public class BearAttackWaitState : BearState
 
     public override void Enter()
     {
+        _attackTimer = 0f;
         Debug.Log("AttackWait 상태 돌입");
     }
 
@@ -24,6 +27,20 @@ public class BearAttackWaitState : BearState
 
     private void AttackWait()
     {
+        _attackTimer += Time.deltaTime;
 
+        if (_attackTimer >= _bear.Stat.AttackCooltime)
+        {
+            _attackTimer = 0f;
+            _bear.ChangeState(EBearStateType.Attack);
+            return;
+        }
+
+        _bear.Agent.SetDestination(_bear.Target.position);
+        if (!_bear.Agent.pathPending && _bear.Agent.remainingDistance > _bear.Stat.AttackRange)
+        {
+            _bear.ChangeState(EBearStateType.Trace);
+            return;
+        }
     }
 }
