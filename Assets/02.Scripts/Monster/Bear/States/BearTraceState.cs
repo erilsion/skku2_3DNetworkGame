@@ -32,12 +32,12 @@ public class BearTraceState : BearState
 
         _bear.Agent.SetDestination(_bear.Target.position);
 
-        //if (!_bear.Agent.pathPending && _bear.Agent.remainingDistance <= _bear.Stat.AttackRange)
-        //{
-        //    _bear.ChangeState(EBearStateType.Attack);
-        //    return;
-        //}
-        if (!_bear.Agent.pathPending && _bear.Agent.remainingDistance > _bear.Stat.ComebackRange)
+        if (!_bear.Agent.pathPending && _bear.Agent.remainingDistance <= _bear.Stat.AttackRange)
+        {
+            _bear.ChangeState(EBearStateType.AttackWait);
+            return;
+        }
+        else if (!_bear.Agent.pathPending && _bear.Agent.remainingDistance > _bear.Stat.ComebackRange)
         {
             _bear.ChangeState(EBearStateType.Comeback);
             return;

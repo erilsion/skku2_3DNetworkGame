@@ -5,7 +5,7 @@
 public class BearStat
 {
     public float MoveSpeed;
-    public float AttackSpeed;
+    public float AttackCooltime;
     public float Health;
     public float MaxHealth;
     public float Damage;
