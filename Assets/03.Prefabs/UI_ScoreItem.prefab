@@ -286,6 +286,7 @@ GameObject:
   - component: {fileID: 5431153094393509658}
   - component: {fileID: 6966627354472641356}
   - component: {fileID: 4077286421169090570}
+  - component: {fileID: 4123782714874029118}
   m_Layer: 5
   m_Name: UI_ScoreItem
   m_TagString: Untagged
@@ -379,6 +380,21 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &4123782714874029118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8679439372665704623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 523c7a701e9b135498013a87dcb7b6b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScoreItemUI
+  _rankTextUI: {fileID: 5592446381560625881}
+  _nicknameTextUI: {fileID: 6475611823241581950}
+  _scoreTextUI: {fileID: 8620199446870762620}
 --- !u!1 &9035477201875429627
 GameObject:
   m_ObjectHideFlags: 0
