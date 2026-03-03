@@ -2123,6 +2123,7 @@ MonoBehaviour:
     ComebackRange: 16
     AttackRange: 5
   _agent: {fileID: 7445226861726062465}
+  _animator: {fileID: 3734775969355451150}
   _patrolPointRoot: {fileID: 2819229068116337976}
 --- !u!114 &5723695050355702265
 MonoBehaviour:
@@ -2179,117 +2180,12 @@ MonoBehaviour:
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
   m_SynchronizeParameters:
-  - Type: 4
+  - Type: 1
     SynchronizeType: 0
-    Name: Idle
-  - Type: 4
-    SynchronizeType: 0
-    Name: Combat Idle
-  - Type: 4
-    SynchronizeType: 0
-    Name: Run Forward
-  - Type: 4
-    SynchronizeType: 0
-    Name: Run Left
-  - Type: 4
-    SynchronizeType: 0
-    Name: Strafe Left
-  - Type: 4
-    SynchronizeType: 0
-    Name: Run Backward Left
-  - Type: 4
-    SynchronizeType: 0
-    Name: Run Backward
-  - Type: 4
-    SynchronizeType: 0
-    Name: Run Backward Right
-  - Type: 4
-    SynchronizeType: 0
-    Name: Strafe Right
-  - Type: 4
-    SynchronizeType: 0
-    Name: Run Right
-  - Type: 4
-    SynchronizeType: 0
-    Name: WalkBackward
-  - Type: 4
-    SynchronizeType: 0
-    Name: WalkBackwardLeft
-  - Type: 4
-    SynchronizeType: 0
-    Name: WalkBackwardRight
-  - Type: 4
-    SynchronizeType: 0
-    Name: WalkForward
-  - Type: 4
-    SynchronizeType: 0
-    Name: WalkForwardLeft
-  - Type: 4
-    SynchronizeType: 0
-    Name: WalkForwardRight
-  - Type: 4
-    SynchronizeType: 0
-    Name: CirclingLeft
-  - Type: 4
-    SynchronizeType: 0
-    Name: CirclingRight
+    Name: Speed
   - Type: 9
     SynchronizeType: 0
-    Name: Jump
-  - Type: 9
-    SynchronizeType: 0
-    Name: Attack1
-  - Type: 9
-    SynchronizeType: 0
-    Name: Attack2
-  - Type: 9
-    SynchronizeType: 0
-    Name: Attack3
-  - Type: 9
-    SynchronizeType: 0
-    Name: Attack4
-  - Type: 9
-    SynchronizeType: 0
-    Name: Attack5
-  - Type: 9
-    SynchronizeType: 0
-    Name: Attack6
-  - Type: 9
-    SynchronizeType: 0
-    Name: Attack7
-  - Type: 9
-    SynchronizeType: 0
-    Name: Attack8
-  - Type: 9
-    SynchronizeType: 0
-    Name: Buff
-  - Type: 9
-    SynchronizeType: 0
-    Name: Get Hit Front
-  - Type: 9
-    SynchronizeType: 0
-    Name: Get Hit Back
-  - Type: 9
-    SynchronizeType: 0
-    Name: Get Hit Left
-  - Type: 9
-    SynchronizeType: 0
-    Name: Get Hit Right
-  - Type: 4
-    SynchronizeType: 0
-    Name: Stunned Loop
-  - Type: 4
-    SynchronizeType: 0
-    Name: Eat
-  - Type: 4
-    SynchronizeType: 0
-    Name: Sit
-  - Type: 4
-    SynchronizeType: 0
-    Name: Sleep
-  - Type: 4
-    SynchronizeType: 0
-    Name: Death
+    Name: Attack
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
