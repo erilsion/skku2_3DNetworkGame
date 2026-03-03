@@ -51,6 +51,7 @@ public class BearController : MonoBehaviourPunCallbacks
 
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
+        _attackCollider.enabled = false;
     }
 
     public void Start()

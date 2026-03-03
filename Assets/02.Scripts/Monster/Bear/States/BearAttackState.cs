@@ -29,6 +29,7 @@ public class BearAttackState : BearState
     public override void Exit()
     {
         Debug.Log("Attack 상태 탈출");
+        _animator.ResetTrigger("Attack");
     }
 
     public void HandleAttackStart()
