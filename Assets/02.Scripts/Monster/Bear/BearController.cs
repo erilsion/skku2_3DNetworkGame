@@ -44,6 +44,9 @@ public class BearController : MonoBehaviourPunCallbacks
             //{ EBearStateType.Hit, new BearHitState(this) },
             //{ EBearStateType.Dead, new BearDeadState(this) }
         };
+
+        _agent = GetComponent<NavMeshAgent>();
+        _animator = GetComponent<Animator>();
     }
 
     public void Start()
@@ -185,5 +188,35 @@ public class BearController : MonoBehaviourPunCallbacks
                          new Vector3(targetPosition.x, 0, targetPosition.z));
 
         return distance <= Stat.DetectRange;
+    }
+
+    public void OnAttackStart()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        if (_currentState is BearAttackState attackState)
+        {
+            attackState.HandleAttackStart();
+        }
+    }
+
+    public void OnAttackFinished()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        if (_currentState is BearAttackState attackState)
+        {
+            attackState.HandleAttackFinished();
+        }
+    }
+
+    public void OnAttackEnd()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        if (_currentState is BearAttackState attackState)
+        {
+            attackState.HandleAttackEnd();
+        }
     }
 }

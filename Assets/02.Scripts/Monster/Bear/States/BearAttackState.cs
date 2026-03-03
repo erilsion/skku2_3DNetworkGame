@@ -4,7 +4,7 @@ using UnityEngine;
 public class BearAttackState : BearState
 {
     [SerializeField] private Collider _collider;
-    [SerializeField] private Animator _animator;
+    private Animator _animator;
 
     public BearAttackState(BearController bear) : base(bear)
     {
@@ -15,6 +15,7 @@ public class BearAttackState : BearState
     {
         _collider.enabled = false;
         Debug.Log("Attack 상태 돌입");
+        _animator = _bear.Animator;
         _animator.SetTrigger("Attack");
 
     }
@@ -29,17 +30,17 @@ public class BearAttackState : BearState
         Debug.Log("Attack 상태 탈출");
     }
 
-    public void OnAttackStart()
+    public void HandleAttackStart()
     {
         _collider.enabled = true;
     }
 
-    public void OnAttackFinished()
+    public void HandleAttackFinished()
     {
         _collider.enabled = false;
     }
 
-    public void OnAttackEnd()
+    public void HandleAttackEnd()
     {
         _bear.ChangeState(EBearStateType.AttackWait);
     }
