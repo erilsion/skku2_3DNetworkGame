@@ -13,6 +13,8 @@ public class ScoreManager : MonoBehaviourPunCallbacks
     private int _score;
     private Dictionary<int, ScoreData> _scores = new();
 
+    private int _halfDevider = 2;
+
     public int Score => _score;
 
     // 외부에서 수정하지 못하도록 ReadOnlyDictionary로 반환한다.
@@ -53,6 +55,14 @@ public class ScoreManager : MonoBehaviourPunCallbacks
     {
         if (score <= 0) return;
         _score += score;
+        OnScoreChanged?.Invoke(_score);
+        Refresh();
+    }
+
+    public void HalfScore()
+    {
+        if (_score <= 0) return;
+        _score /= _halfDevider;
         OnScoreChanged?.Invoke(_score);
         Refresh();
     }

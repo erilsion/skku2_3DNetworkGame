@@ -31,6 +31,7 @@ public class PlayerDeathAbility : PlayerAbility
     {
         if (!_owner.PhotonView.IsMine) return;
 
+        ScoreManager.Instance.HalfScore();
         if (_respawnCoroutine != null) return;
         _respawnCoroutine = StartCoroutine(RespawnRoutine());
     }
