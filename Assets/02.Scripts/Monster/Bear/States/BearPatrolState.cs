@@ -60,6 +60,9 @@ public class BearPatrolState : BearState
         Vector3 targetPoint = _patrolPoints[_currentPatrolIndex];
 
         _bear.Agent.SetDestination(targetPoint);
+        float speedPercent = _bear.Agent.velocity.magnitude / _bear.Agent.speed;
+        _bear.Animator.SetFloat("Speed", speedPercent);
+
         if (!_bear.Agent.pathPending && _bear.Agent.remainingDistance <= _bear.Agent.stoppingDistance)
         {
             _patrolWaitTimer += Time.deltaTime;

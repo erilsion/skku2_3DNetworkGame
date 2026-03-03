@@ -31,6 +31,8 @@ public class BearTraceState : BearState
         }
 
         _bear.Agent.SetDestination(_bear.Target.position);
+        float speedPercent = _bear.Agent.velocity.magnitude / _bear.Agent.speed;
+        _bear.Animator.SetFloat("Speed", speedPercent);
 
         if (!_bear.Agent.pathPending && _bear.Agent.remainingDistance <= _bear.Stat.AttackRange)
         {

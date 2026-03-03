@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 public class BearComebackState : BearState
 {
@@ -36,6 +37,9 @@ public class BearComebackState : BearState
         }
 
         _bear.Agent.SetDestination(_comebackPoint);
+        float speedPercent = _bear.Agent.velocity.magnitude / _bear.Agent.speed;
+        _bear.Animator.SetFloat("Speed", speedPercent);
+
         if (!_bear.Agent.pathPending && _bear.Agent.remainingDistance <= _bear.Agent.stoppingDistance)
         {
             _bear.ChangeState(EBearStateType.Idle);

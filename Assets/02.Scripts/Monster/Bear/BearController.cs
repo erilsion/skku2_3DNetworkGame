@@ -12,9 +12,13 @@ public class BearController : MonoBehaviourPunCallbacks
     private Dictionary<EBearStateType, IBearState> _states;
 
     public NavMeshAgent Agent => _agent;
+    public Animator Animator => _animator;
 
     [Header("곰 에이전트")]
     [SerializeField] private NavMeshAgent _agent;
+
+    [Header("곰 애니메이터")]
+    [SerializeField] private Animator _animator;
 
     [Header("순찰 지점 루트")]
     [SerializeField] private Transform _patrolPointRoot;
