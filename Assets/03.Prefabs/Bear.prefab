@@ -2124,6 +2124,7 @@ MonoBehaviour:
     AttackRange: 5
   _agent: {fileID: 7445226861726062465}
   _animator: {fileID: 3734775969355451150}
+  _attackCollider: {fileID: 1553500638584650921}
   _patrolPointRoot: {fileID: 2819229068116337976}
 --- !u!114 &5723695050355702265
 MonoBehaviour:

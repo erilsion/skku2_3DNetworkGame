@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BearAttackState : BearState
 {
-    [SerializeField] private Collider _collider;
+    private Collider _collider;
     private Animator _animator;
 
     public BearAttackState(BearController bear) : base(bear)
@@ -13,6 +13,7 @@ public class BearAttackState : BearState
 
     public override void Enter()
     {
+        _collider = _bear.AttackCollider;
         _collider.enabled = false;
         Debug.Log("Attack 상태 돌입");
         _animator = _bear.Animator;
