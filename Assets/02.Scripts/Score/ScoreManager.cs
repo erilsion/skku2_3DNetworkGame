@@ -13,6 +13,8 @@ public class ScoreManager : MonoBehaviourPunCallbacks
     private int _score;
     private Dictionary<int, ScoreData> _scores = new();
 
+    public int Score => _score;
+
     // 외부에서 수정하지 못하도록 ReadOnlyDictionary로 반환한다.
     public ReadOnlyDictionary<int, ScoreData> Scores => new ReadOnlyDictionary<int, ScoreData>(_scores);
 
@@ -20,6 +22,7 @@ public class ScoreManager : MonoBehaviourPunCallbacks
     public ReadOnlyCollection<int> Numbers => _numbers.AsReadOnly();
 
     public static event Action OnDataChanged;
+    public static event Action<int> OnScoreChanged;
 
     [SerializeField] private TotalScoreUI _totalScoreUI;
 
@@ -48,7 +51,10 @@ public class ScoreManager : MonoBehaviourPunCallbacks
 
     public void AddScore(int score)
     {
+        if (score <= 0) return;
         _score += score;
+        OnScoreChanged?.Invoke(_score);
+        Refresh();
     }
 
     private void Refresh()
@@ -75,11 +81,5 @@ public class ScoreManager : MonoBehaviourPunCallbacks
         _scores[targetPlayer.ActorNumber] = scoreData;
 
         OnDataChanged?.Invoke();
-    }
-
-    public void Register(PlayerGetScoreAbility ability)
-    {
-        ability.OnGetScoreEvent += _totalScoreUI.SetScore;
-        _totalScoreUI.SetScore(ability.CurrentScore);
     }
 }
