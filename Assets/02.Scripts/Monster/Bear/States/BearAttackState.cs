@@ -4,7 +4,6 @@ using UnityEngine;
 public class BearAttackState : BearState
 {
     private Collider _collider;
-    private Animator _animator;
 
     public BearAttackState(BearController bear) : base(bear)
     {
@@ -15,10 +14,6 @@ public class BearAttackState : BearState
     {
         _collider = _bear.AttackCollider;
         _collider.enabled = false;
-        Debug.Log("Attack 상태 돌입");
-        _animator = _bear.Animator;
-        _animator.SetTrigger("Attack");
-
     }
 
     public override void Update()
@@ -28,8 +23,7 @@ public class BearAttackState : BearState
 
     public override void Exit()
     {
-        Debug.Log("Attack 상태 탈출");
-        _animator.ResetTrigger("Attack");
+
     }
 
     public void HandleAttackStart()

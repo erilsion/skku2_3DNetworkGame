@@ -9,7 +9,7 @@ public class BearTraceState : BearState
 
     public override void Enter()
     {
-        Debug.Log("Trace 상태 돌입");
+
     }
 
     public override void Update()
@@ -19,7 +19,7 @@ public class BearTraceState : BearState
 
     public override void Exit()
     {
-        Debug.Log("Trace 상태 탈출");
+
     }
 
     private void Trace()

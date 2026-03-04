@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class BearHitState : BearState
 {
-    private Animator _animator;
     public BearHitState(BearController bear) : base(bear)
     {
 
@@ -11,10 +10,7 @@ public class BearHitState : BearState
 
     public override void Enter()
     {
-        Debug.Log("Hit 상태 돌입");
         _bear.Agent.isStopped = true;
-        _animator = _bear.Animator;
-        _animator.SetTrigger("Hit");
     }
 
     public override void Update()
@@ -24,9 +20,7 @@ public class BearHitState : BearState
 
     public override void Exit()
     {
-        Debug.Log("Hit 상태 탈출");
         _bear.Agent.isStopped = false;
-        _animator.ResetTrigger("Hit");
     }
 
     public void OnHitAnimationEnd()

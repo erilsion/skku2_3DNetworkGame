@@ -15,7 +15,6 @@ public class BearIdleState : BearState
     public override void Enter()
     {
         _idleToPatrolTimer = 0f;
-        Debug.Log("Idle 상태 돌입");
     }
 
     public override void Update()
@@ -25,7 +24,7 @@ public class BearIdleState : BearState
 
     public override void Exit()
     {
-        Debug.Log("Idle 상태 탈출");
+
     }
 
     private void Idle()
