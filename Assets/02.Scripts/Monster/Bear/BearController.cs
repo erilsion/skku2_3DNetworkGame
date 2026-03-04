@@ -124,13 +124,13 @@ public class BearController : MonoBehaviourPunCallbacks
         // todo. ApplyVisualState(stateType); 식으로 타 플레이어들에게 애니메이션 호출하기.
     }
 
-    public void RequestDamage(int damage)
+    public void RequestDamage(float damage)
     {
         photonView.RPC(nameof(RPCOnTakeDamage), RpcTarget.MasterClient, damage);
     }
 
     [PunRPC]
-    void RPCOnTakeDamage(int damage)
+    void RPCOnTakeDamage(float damage)
     {
         if (!PhotonNetwork.IsMasterClient) return;
         if (IsInvincible) return;
