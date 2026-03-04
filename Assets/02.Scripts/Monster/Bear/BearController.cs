@@ -31,6 +31,7 @@ public class BearController : MonoBehaviourPunCallbacks
 
     public Vector3[] PatrolPositions { get; private set; }
 
+    private float _bearHitInvincibleDuration = 1.06f;
     private float _invincibleEndTime;
 
     // 데미지 처리, 상태 변경, 무적 판단을 전부 마스터 클라이언트에서만 하기 때문에, Time.time을 써도 괜찮다.
@@ -136,6 +137,8 @@ public class BearController : MonoBehaviourPunCallbacks
         if (IsInvincible) return;
 
         Stat.Health -= damage;
+
+        SetInvincible(_bearHitInvincibleDuration);
 
         if (Stat.Health <= 0)
         {
