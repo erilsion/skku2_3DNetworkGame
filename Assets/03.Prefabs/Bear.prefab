@@ -1431,6 +1431,72 @@ Transform:
   - {fileID: 1698172200850942414}
   m_Father: {fileID: 5378164941576247392}
   m_LocalEulerAnglesHint: {x: 76.07403, y: 1.955519, z: 28.899332}
+--- !u!1 &4658843070799422426
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 828705468869624404}
+  - component: {fileID: 1074688986598116405}
+  - component: {fileID: 8185863654100757819}
+  m_Layer: 0
+  m_Name: AttackCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &828705468869624404
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4658843070799422426}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7292658344771522932}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1074688986598116405
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4658843070799422426}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 1, z: 2.5}
+  m_Center: {x: 0, y: 0.5, z: 1.8}
+--- !u!114 &8185863654100757819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4658843070799422426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f7628dbfd24dd74183c4a6f1e80bb77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BearAttackAbility
 --- !u!1 &4832656031562933479
 GameObject:
   m_ObjectHideFlags: 0
@@ -2053,7 +2119,6 @@ GameObject:
   - component: {fileID: 7057454005137584486}
   - component: {fileID: 235130778585773311}
   - component: {fileID: 7445226861726062465}
-  - component: {fileID: 1553500638584650921}
   - component: {fileID: 7209767753456413045}
   - component: {fileID: 749042557410324020}
   - component: {fileID: 2180172395544752772}
@@ -2080,6 +2145,7 @@ Transform:
   - {fileID: 1838717086156636650}
   - {fileID: 8036338751982688932}
   - {fileID: 2819229068116337976}
+  - {fileID: 828705468869624404}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3734775969355451150
@@ -2127,7 +2193,8 @@ MonoBehaviour:
     AttackRange: 5
   _agent: {fileID: 7445226861726062465}
   _animator: {fileID: 3734775969355451150}
-  _attackCollider: {fileID: 1553500638584650921}
+  _attackCollider: {fileID: 1074688986598116405}
+  _hitCollider: {fileID: 2180172395544752772}
   _patrolPointRoot: {fileID: 2819229068116337976}
 --- !u!114 &5723695050355702265
 MonoBehaviour:
@@ -2218,27 +2285,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!65 &1553500638584650921
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7962199819078159310}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2, y: 1, z: 2.5}
-  m_Center: {x: 0, y: 0.5, z: 1.8}
 --- !u!54 &7209767753456413045
 Rigidbody:
   m_ObjectHideFlags: 0
