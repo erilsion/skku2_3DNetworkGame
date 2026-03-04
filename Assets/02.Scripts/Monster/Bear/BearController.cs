@@ -14,6 +14,7 @@ public class BearController : MonoBehaviourPunCallbacks
     public NavMeshAgent Agent => _agent;
     public Animator Animator => _animator;
     public Collider AttackCollider => _attackCollider;
+    public Collider HitCollider => _hitCollider;
 
     [Header("곰 에이전트")]
     [SerializeField] private NavMeshAgent _agent;
@@ -21,17 +22,22 @@ public class BearController : MonoBehaviourPunCallbacks
     [Header("곰 애니메이터")]
     [SerializeField] private Animator _animator;
 
-    [Header("곰 공격 콜라이더")]
+    [Header("곰 콜라이더")]
     [SerializeField] private Collider _attackCollider;
+    [SerializeField] private Collider _hitCollider;
 
     [Header("순찰 지점 루트")]
     [SerializeField] private Transform _patrolPointRoot;
 
     public Vector3[] PatrolPositions { get; private set; }
 
+    private float _invincibleEndTime;
+
+    // 데미지 처리, 상태 변경, 무적 판단을 전부 마스터 클라이언트에서만 하기 때문에, Time.time을 써도 괜찮다.
+    public bool IsInvincible => Time.time < _invincibleEndTime;
+
     private Transform _target;
     public Transform Target => _target;
-
 
     void Awake()
     {
@@ -45,7 +51,7 @@ public class BearController : MonoBehaviourPunCallbacks
             { EBearStateType.Comeback, new BearComebackState(this) },
             { EBearStateType.Attack, new BearAttackState(this) },
             { EBearStateType.AttackWait, new BearAttackWaitState(this) },
-            //{ EBearStateType.Hit, new BearHitState(this) },
+            { EBearStateType.Hit, new BearHitState(this) },
             //{ EBearStateType.Dead, new BearDeadState(this) }
         };
 
@@ -127,6 +133,7 @@ public class BearController : MonoBehaviourPunCallbacks
     void RPCOnTakeDamage(int damage)
     {
         if (!PhotonNetwork.IsMasterClient) return;
+        if (IsInvincible) return;
 
         Stat.Health -= damage;
 
@@ -134,10 +141,15 @@ public class BearController : MonoBehaviourPunCallbacks
         {
             ChangeState(EBearStateType.Dead);
         }
-        else
+        else if (CurrentStateType != EBearStateType.Hit)
         {
             ChangeState(EBearStateType.Hit);
         }
+    }
+
+    public void SetInvincible(float duration)
+    {
+        _invincibleEndTime = Time.time + duration;
     }
 
     public override void OnMasterClientSwitched(Photon.Realtime.Player newMasterClient)
@@ -222,6 +234,16 @@ public class BearController : MonoBehaviourPunCallbacks
         if (_currentState is BearAttackState attackState)
         {
             attackState.HandleAttackEnd();
+        }
+    }
+
+    public void OnHitEnd()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        if (_currentState is BearHitState hitState)
+        {
+            hitState.OnHitAnimationEnd();
         }
     }
 
