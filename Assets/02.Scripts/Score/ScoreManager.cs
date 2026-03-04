@@ -24,8 +24,7 @@ public class ScoreManager : MonoBehaviourPunCallbacks
     public ReadOnlyCollection<int> Numbers => _numbers.AsReadOnly();
 
     public static event Action OnDataChanged;
-    public static event Action<int> OnScoreChanged;
-    public static event Action OnScoreThousand;
+    public static event Action<Player, int> OnPlayerScoreChanged;
 
     [SerializeField] private TotalScoreUI _totalScoreUI;
 
@@ -56,7 +55,6 @@ public class ScoreManager : MonoBehaviourPunCallbacks
     {
         if (score <= 0) return;
         _score += score;
-        OnScoreChanged?.Invoke(Score);
         Refresh();
     }
 
@@ -64,7 +62,6 @@ public class ScoreManager : MonoBehaviourPunCallbacks
     {
         if (_score <= 0) return;
         _score /= _halfDevider;
-        OnScoreChanged?.Invoke(Score);
         Refresh();
     }
 
@@ -83,14 +80,17 @@ public class ScoreManager : MonoBehaviourPunCallbacks
     {
         if (!changedProps.ContainsKey("score")) return;
 
+        int newScore = (int)changedProps["score"];
+
         ScoreData scoreData = new ScoreData
         {
             Nickname = targetPlayer.NickName,
-            Score = (int)changedProps["score"]
+            Score = newScore
         };
 
         _scores[targetPlayer.ActorNumber] = scoreData;
 
+        OnPlayerScoreChanged?.Invoke(targetPlayer, newScore);
         OnDataChanged?.Invoke();
     }
 }

@@ -660,6 +660,7 @@ GameObject:
   - component: {fileID: 6508871864379605767}
   - component: {fileID: 8971371290158210827}
   - component: {fileID: 536555303529260518}
+  - component: {fileID: 3550078376200617264}
   m_Layer: 6
   m_Name: weapon_r
   m_TagString: Untagged
@@ -716,6 +717,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88dd88748fc88da41be7c6f8fd89276b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponHitAbility
+--- !u!114 &3550078376200617264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150964035454596192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9001e2f035644a45a935504c15adfd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponScaleAbility
+  _weaponTransform: {fileID: 6508871864379605767}
+  _scorePerLevel: 1000
 --- !u!1 &1241696477704116617
 GameObject:
   m_ObjectHideFlags: 0
