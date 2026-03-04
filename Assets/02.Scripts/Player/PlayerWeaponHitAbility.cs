@@ -5,6 +5,12 @@ public class PlayerWeaponHitAbility : PlayerAbility
 {
     private void OnTriggerEnter(Collider other)
     {
+        if (other.TryGetComponent<BearController>(out var bearController))
+        {
+            BearController bear = other.GetComponent<BearController>();
+            bear.RequestDamage(_owner.Stat.Damage);
+        }
+
         if (!_owner.PhotonView.IsMine) return;
         if (other.transform == _owner.transform) return;
 

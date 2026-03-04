@@ -12,7 +12,6 @@ public class BearAttackWaitState : BearState
     public override void Enter()
     {
         _attackTimer = 0f;
-        Debug.Log("AttackWait 상태 돌입");
     }
 
     public override void Update()
@@ -22,7 +21,7 @@ public class BearAttackWaitState : BearState
 
     public override void Exit()
     {
-        Debug.Log("AttackWait 상태 탈출");
+
     }
 
     private void AttackWait()

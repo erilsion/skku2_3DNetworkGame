@@ -20,7 +20,6 @@ public class BearPatrolState : BearState
 
     public override void Enter()
     {
-        Debug.Log("Patrol 상태 돌입");
         _patrolPoints = _bear.PatrolPositions;
 
         if (_patrolPoints == null || _patrolPoints.Length == 0)
@@ -40,7 +39,7 @@ public class BearPatrolState : BearState
 
     public override void Exit()
     {
-        Debug.Log("Patrol 상태 탈출");
+
     }
 
     private void Patrol()

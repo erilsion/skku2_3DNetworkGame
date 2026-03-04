@@ -14,6 +14,7 @@ public class BearController : MonoBehaviourPunCallbacks
     public NavMeshAgent Agent => _agent;
     public Animator Animator => _animator;
     public Collider AttackCollider => _attackCollider;
+    public Collider HitCollider => _hitCollider;
 
     [Header("곰 에이전트")]
     [SerializeField] private NavMeshAgent _agent;
@@ -21,17 +22,27 @@ public class BearController : MonoBehaviourPunCallbacks
     [Header("곰 애니메이터")]
     [SerializeField] private Animator _animator;
 
-    [Header("곰 공격 콜라이더")]
+    [Header("곰 콜라이더")]
     [SerializeField] private Collider _attackCollider;
+    [SerializeField] private Collider _hitCollider;
 
     [Header("순찰 지점 루트")]
     [SerializeField] private Transform _patrolPointRoot;
 
     public Vector3[] PatrolPositions { get; private set; }
 
+    private float _bearHitInvincibleDuration = 1.06f;
+    private float _bearDeadInvincibleDuration = 5f;
+    private float _invincibleEndTime;
+
+    // 데미지 처리, 상태 변경, 무적 판단을 전부 마스터 클라이언트에서만 하기 때문에, Time.time을 써도 괜찮다.
+    public bool IsInvincible => Time.time < _invincibleEndTime;
+
     private Transform _target;
     public Transform Target => _target;
 
+    private float _speedLerpInterpolation = 10f;
+    private Vector3 _bearLastPosition;
 
     void Awake()
     {
@@ -45,8 +56,8 @@ public class BearController : MonoBehaviourPunCallbacks
             { EBearStateType.Comeback, new BearComebackState(this) },
             { EBearStateType.Attack, new BearAttackState(this) },
             { EBearStateType.AttackWait, new BearAttackWaitState(this) },
-            //{ EBearStateType.Hit, new BearHitState(this) },
-            //{ EBearStateType.Dead, new BearDeadState(this) }
+            { EBearStateType.Hit, new BearHitState(this) },
+            { EBearStateType.Dead, new BearDeadState(this) }
         };
 
         _agent = GetComponent<NavMeshAgent>();
@@ -56,6 +67,8 @@ public class BearController : MonoBehaviourPunCallbacks
 
     public void Start()
     {
+        _bearLastPosition = transform.position;
+
         if (PhotonRoomManager.Instance != null)
         {
             PhotonRoomManager.Instance.OnRoomJoined += SetupByMasterState;
@@ -91,11 +104,33 @@ public class BearController : MonoBehaviourPunCallbacks
         }
     }
 
-    void Update()
+    private void Update()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // 마스터 클라이언트에서 처리하는 로직이다.
+            _currentState?.Update();
 
-        _currentState?.Update();
+            float speedPercent = _agent.velocity.magnitude / _agent.speed;
+            _animator.SetFloat("Speed", speedPercent);
+        }
+        else
+        {
+            // 그 외 클라이언트에서 처리하는 로직이다.
+            float distance = Vector3.Distance(transform.position, _bearLastPosition);
+            float speed = distance / Time.deltaTime;
+
+            float speedPercent = speed / Stat.MoveSpeed;
+
+            float smoothSpeed = Mathf.Lerp(
+                _animator.GetFloat("Speed"),
+                speedPercent,
+                Time.deltaTime * _speedLerpInterpolation);
+
+            _animator.SetFloat("Speed", smoothSpeed);
+
+            _bearLastPosition = transform.position;
+        }
     }
 
     public void ChangeState(EBearStateType newStateType)
@@ -107,37 +142,72 @@ public class BearController : MonoBehaviourPunCallbacks
         _currentState = _states[newStateType];
         _currentState?.Enter();
 
+        // 플레이어 전체에게 애니메이션을 호출해준다.
+        ApplyVisualState(newStateType);
+
         photonView.RPC(nameof(SyncState), RpcTarget.Others, newStateType);
     }
 
     [PunRPC]
-    void SyncState(EBearStateType stateType)
+    private void SyncState(EBearStateType stateType)
     {
         if (PhotonNetwork.IsMasterClient) return;
 
-        // todo. ApplyVisualState(stateType); 식으로 타 플레이어들에게 애니메이션 호출하기.
+        CurrentStateType = stateType;
+
+        ApplyVisualState(stateType);
     }
 
-    public void RequestDamage(int damage)
+    private void ApplyVisualState(EBearStateType stateType)
+    {
+        _animator.ResetTrigger("Attack");
+        _animator.ResetTrigger("Hit");
+        _animator.ResetTrigger("Dead");
+
+        switch (stateType)
+        {
+            case EBearStateType.Attack:
+                _animator.SetTrigger("Attack");
+                break;
+
+            case EBearStateType.Hit:
+                _animator.SetTrigger("Hit");
+                break;
+
+            case EBearStateType.Dead:
+                _animator.SetTrigger("Dead");
+                break;
+        }
+    }
+
+    public void RequestDamage(float damage)
     {
         photonView.RPC(nameof(RPCOnTakeDamage), RpcTarget.MasterClient, damage);
     }
 
     [PunRPC]
-    void RPCOnTakeDamage(int damage)
+    void RPCOnTakeDamage(float damage)
     {
         if (!PhotonNetwork.IsMasterClient) return;
+        if (IsInvincible) return;
 
         Stat.Health -= damage;
 
         if (Stat.Health <= 0)
         {
+            SetInvincible(_bearDeadInvincibleDuration);
             ChangeState(EBearStateType.Dead);
         }
-        else
+        else if (CurrentStateType != EBearStateType.Hit)
         {
+            SetInvincible(_bearHitInvincibleDuration);
             ChangeState(EBearStateType.Hit);
         }
+    }
+
+    public void SetInvincible(float duration)
+    {
+        _invincibleEndTime = Time.time + duration;
     }
 
     public override void OnMasterClientSwitched(Photon.Realtime.Player newMasterClient)
@@ -225,16 +295,23 @@ public class BearController : MonoBehaviourPunCallbacks
         }
     }
 
-    public void OnTriggerEnter(Collider other)
+    public void OnHitEnd()
     {
         if (!PhotonNetwork.IsMasterClient) return;
-        if (other.transform == transform) return;
 
-        if (other.TryGetComponent<IDamageable>(out var damageable))
+        if (_currentState is BearHitState hitState)
         {
-            int actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
-            PlayerController otherPlayer = other.GetComponent<PlayerController>();
-            otherPlayer.PhotonView.RPC(nameof(damageable.TakeDamage), RpcTarget.All, otherPlayer.Stat.Damage, actorNumber);
+            hitState.OnHitAnimationEnd();
+        }
+    }
+
+    public void OnDeadEnd()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        if (_currentState is BearDeadState deadState)
+        {
+            deadState.OnDeadAnimationEnd();
         }
     }
 }
