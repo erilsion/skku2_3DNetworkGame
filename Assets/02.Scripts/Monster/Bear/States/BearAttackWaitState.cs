@@ -29,14 +29,19 @@ public class BearAttackWaitState : BearState
     {
         _attackTimer += Time.deltaTime;
 
+        _bear.Agent.SetDestination(_bear.Target.position);
+        if (_bear.Target.position == null)
+        {
+            _attackTimer = 0f;
+            _bear.ChangeState(EBearStateType.Comeback);
+            return;
+        }
         if (_attackTimer >= _bear.Stat.AttackCooltime)
         {
             _attackTimer = 0f;
             _bear.ChangeState(EBearStateType.Attack);
             return;
         }
-
-        _bear.Agent.SetDestination(_bear.Target.position);
         if (!_bear.Agent.pathPending && _bear.Agent.remainingDistance > _bear.Stat.AttackRange)
         {
             _bear.ChangeState(EBearStateType.Trace);

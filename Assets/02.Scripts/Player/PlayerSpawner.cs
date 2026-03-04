@@ -22,10 +22,6 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
         // 로컬 플레이어만 UI를 연결한다.
         PhotonView photonView = player.GetComponent<PhotonView>();
         if (!photonView.IsMine) return;
-
-        PlayerGetScoreAbility ability = player.GetComponent<PlayerGetScoreAbility>();
-
-        ScoreManager.Instance.Register(ability);
     }
 
     public Transform GetRandomSpawnPoint()

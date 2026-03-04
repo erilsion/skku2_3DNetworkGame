@@ -13,12 +13,16 @@ public class BearController : MonoBehaviourPunCallbacks
 
     public NavMeshAgent Agent => _agent;
     public Animator Animator => _animator;
+    public Collider AttackCollider => _attackCollider;
 
     [Header("곰 에이전트")]
     [SerializeField] private NavMeshAgent _agent;
 
     [Header("곰 애니메이터")]
     [SerializeField] private Animator _animator;
+
+    [Header("곰 공격 콜라이더")]
+    [SerializeField] private Collider _attackCollider;
 
     [Header("순찰 지점 루트")]
     [SerializeField] private Transform _patrolPointRoot;
@@ -44,6 +48,10 @@ public class BearController : MonoBehaviourPunCallbacks
             //{ EBearStateType.Hit, new BearHitState(this) },
             //{ EBearStateType.Dead, new BearDeadState(this) }
         };
+
+        _agent = GetComponent<NavMeshAgent>();
+        _animator = GetComponent<Animator>();
+        _attackCollider.enabled = false;
     }
 
     public void Start()
@@ -185,5 +193,48 @@ public class BearController : MonoBehaviourPunCallbacks
                          new Vector3(targetPosition.x, 0, targetPosition.z));
 
         return distance <= Stat.DetectRange;
+    }
+
+    public void OnAttackStart()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        if (_currentState is BearAttackState attackState)
+        {
+            attackState.HandleAttackStart();
+        }
+    }
+
+    public void OnAttackFinished()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        if (_currentState is BearAttackState attackState)
+        {
+            attackState.HandleAttackFinished();
+        }
+    }
+
+    public void OnAttackEnd()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        if (_currentState is BearAttackState attackState)
+        {
+            attackState.HandleAttackEnd();
+        }
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+        if (other.transform == transform) return;
+
+        if (other.TryGetComponent<IDamageable>(out var damageable))
+        {
+            int actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
+            PlayerController otherPlayer = other.GetComponent<PlayerController>();
+            otherPlayer.PhotonView.RPC(nameof(damageable.TakeDamage), RpcTarget.All, otherPlayer.Stat.Damage, actorNumber);
+        }
     }
 }
