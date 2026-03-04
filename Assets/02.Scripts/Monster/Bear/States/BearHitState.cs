@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class BearHitState : BearState
 {
+    private Animator _animator;
     public BearHitState(BearController bear) : base(bear)
     {
 
@@ -12,7 +13,8 @@ public class BearHitState : BearState
     {
         Debug.Log("Hit 상태 돌입");
         _bear.Agent.isStopped = true;
-        _bear.Animator.SetTrigger("Hit");
+        _animator = _bear.Animator;
+        _animator.SetTrigger("Hit");
     }
 
     public override void Update()
@@ -23,12 +25,13 @@ public class BearHitState : BearState
     public override void Exit()
     {
         Debug.Log("Hit 상태 탈출");
+        _bear.Agent.isStopped = false;
+        _animator.ResetTrigger("Hit");
     }
 
     public void OnHitAnimationEnd()
     {
         if (!PhotonNetwork.IsMasterClient) return;
-        _bear.Agent.isStopped = false;
 
         // 타겟이 있으면 다시 추적하고, 없으면 복귀 상태로 전환한다.
         if (_bear.IsTargetInDetectRange())

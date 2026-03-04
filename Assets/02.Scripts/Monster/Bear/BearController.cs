@@ -32,6 +32,7 @@ public class BearController : MonoBehaviourPunCallbacks
     public Vector3[] PatrolPositions { get; private set; }
 
     private float _bearHitInvincibleDuration = 1.06f;
+    private float _bearDeadInvincibleDuration = 5f;
     private float _invincibleEndTime;
 
     // 데미지 처리, 상태 변경, 무적 판단을 전부 마스터 클라이언트에서만 하기 때문에, Time.time을 써도 괜찮다.
@@ -53,7 +54,7 @@ public class BearController : MonoBehaviourPunCallbacks
             { EBearStateType.Attack, new BearAttackState(this) },
             { EBearStateType.AttackWait, new BearAttackWaitState(this) },
             { EBearStateType.Hit, new BearHitState(this) },
-            //{ EBearStateType.Dead, new BearDeadState(this) }
+            { EBearStateType.Dead, new BearDeadState(this) }
         };
 
         _agent = GetComponent<NavMeshAgent>();
@@ -138,14 +139,14 @@ public class BearController : MonoBehaviourPunCallbacks
 
         Stat.Health -= damage;
 
-        SetInvincible(_bearHitInvincibleDuration);
-
         if (Stat.Health <= 0)
         {
+            SetInvincible(_bearDeadInvincibleDuration);
             ChangeState(EBearStateType.Dead);
         }
         else if (CurrentStateType != EBearStateType.Hit)
         {
+            SetInvincible(_bearHitInvincibleDuration);
             ChangeState(EBearStateType.Hit);
         }
     }
@@ -247,6 +248,16 @@ public class BearController : MonoBehaviourPunCallbacks
         if (_currentState is BearHitState hitState)
         {
             hitState.OnHitAnimationEnd();
+        }
+    }
+
+    public void OnDeadEnd()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        if (_currentState is BearDeadState deadState)
+        {
+            deadState.OnDeadAnimationEnd();
         }
     }
 }
