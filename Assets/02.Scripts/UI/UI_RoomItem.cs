@@ -2,6 +2,7 @@
 using TMPro;
 using Photon.Realtime;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class UI_RoomItem : MonoBehaviour
 {
@@ -23,12 +24,14 @@ public class UI_RoomItem : MonoBehaviour
         _roomInfo = roomInfo;
 
         _roomNameTextUI.text = roomInfo.Name;
-        _masterNicknameTextUI.text = $"방장: {roomInfo.Name}";
+        _masterNicknameTextUI.text = $"방장: {PhotonNetwork.NickName}";
         _playerCountTextUI.text = $"인원: {roomInfo.PlayerCount}/{roomInfo.MaxPlayers}";
     }
 
     public void EnterRoom()
     {
         if (_roomInfo == null) return;
+
+        PhotonNetwork.JoinRoom(_roomInfo.Name);
     }
 }

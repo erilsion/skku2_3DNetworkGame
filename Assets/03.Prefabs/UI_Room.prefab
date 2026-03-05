@@ -122,6 +122,7 @@ MonoBehaviour:
   _roomNameTextUI: {fileID: 399383563417619654}
   _masterNicknameTextUI: {fileID: 5549402548695117969}
   _playerCountTextUI: {fileID: 7739668038255583279}
+  _roomEnterButton: {fileID: 311984670286820089}
 --- !u!114 &311984670286820089
 MonoBehaviour:
   m_ObjectHideFlags: 0

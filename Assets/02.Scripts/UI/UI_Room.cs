@@ -7,6 +7,7 @@ using Photon.Realtime;
 public class UI_Room : MonoBehaviourPunCallbacks
 {
     private List<UI_RoomItem> _roomItems;
+    private Dictionary<string, RoomInfo> _rooms;
 
     private void Awake()
     {
@@ -32,11 +33,26 @@ public class UI_Room : MonoBehaviourPunCallbacks
         // 모든 방 UI를 비활성화한다.
         HideAllRoomUI();
 
-        int roomCount = roomList.Count;
+        foreach (var room in roomList)
+        {
+            if (room.RemovedFromList)
+            {
+                // 해당 방을 제거한다.
+                _rooms.Remove(room.Name);
+            }
+            else
+            {
+                // 방을 추가하거나 업데이트한다.
+                _rooms[room.Name] = room;
+            }
+        }
+
+        int roomCount = _rooms.Count;
+        List<RoomInfo> rooms = _rooms.Values.ToList();
         for (int i = 0; i < roomCount; i++)
         {
             // 방 개수만큼만 UI를 활성화한다.
-            _roomItems[i].Init(roomList[i]);
+            _roomItems[i].Init(rooms[i]);
             _roomItems[i].gameObject.SetActive(true);
         }
     }
