@@ -13,6 +13,12 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
         Instance = this;
     }
 
+    private void Start()
+    {
+        PlayerSpawn();
+    }
+
+    // 스폰 포지션을 지정하고 플레이어를 스폰한다.
     public void PlayerSpawn()
     {
         Transform spawnPoint = GetRandomSpawnPoint();
