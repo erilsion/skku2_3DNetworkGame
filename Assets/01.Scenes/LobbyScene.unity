@@ -5765,6 +5765,7 @@ GameObject:
   - component: {fileID: 636379681}
   - component: {fileID: 636379680}
   - component: {fileID: 636379679}
+  - component: {fileID: 636379682}
   m_Layer: 5
   m_Name: RoomCreateButton
   m_TagString: Untagged
@@ -5874,6 +5875,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 636379677}
   m_CullTransparentMesh: 1
+--- !u!114 &636379682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636379677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: 1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &639690793
 GameObject:
   m_ObjectHideFlags: 0
@@ -7377,7 +7398,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &767643588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9448,6 +9469,7 @@ GameObject:
   - component: {fileID: 944092338}
   - component: {fileID: 944092340}
   - component: {fileID: 944092339}
+  - component: {fileID: 944092341}
   m_Layer: 5
   m_Name: RoomIdTitle
   m_TagString: Untagged
@@ -9574,6 +9596,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 944092337}
   m_CullTransparentMesh: 1
+--- !u!114 &944092341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944092337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: 1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &966582484
 GameObject:
   m_ObjectHideFlags: 0
@@ -10868,6 +10910,7 @@ GameObject:
   - component: {fileID: 1062686883}
   - component: {fileID: 1062686882}
   - component: {fileID: 1062686881}
+  - component: {fileID: 1062686884}
   m_Layer: 5
   m_Name: NicknameInputField
   m_TagString: Untagged
@@ -11034,6 +11077,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1062686879}
   m_CullTransparentMesh: 1
+--- !u!114 &1062686884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062686879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: 3
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1001 &1065042009
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14049,7 +14112,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 4
+  m_ChildAlignment: 7
   m_Spacing: 20
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
@@ -15165,6 +15228,7 @@ GameObject:
   - component: {fileID: 1568279949}
   - component: {fileID: 1568279948}
   - component: {fileID: 1568279947}
+  - component: {fileID: 1568279950}
   m_Layer: 5
   m_Name: RoomIdInputField
   m_TagString: Untagged
@@ -15331,6 +15395,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1568279945}
   m_CullTransparentMesh: 1
+--- !u!114 &1568279950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568279945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: 2
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &1570939679
 GameObject:
   m_ObjectHideFlags: 0
@@ -17497,6 +17581,7 @@ GameObject:
   - component: {fileID: 1900379087}
   - component: {fileID: 1900379089}
   - component: {fileID: 1900379088}
+  - component: {fileID: 1900379090}
   m_Layer: 5
   m_Name: NicknameTitle
   m_TagString: Untagged
@@ -17623,6 +17708,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1900379086}
   m_CullTransparentMesh: 1
+--- !u!114 &1900379090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900379086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: 1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1001 &1904508591
 PrefabInstance:
   m_ObjectHideFlags: 0
