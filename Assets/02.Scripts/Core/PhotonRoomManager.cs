@@ -2,6 +2,7 @@
 using Photon.Realtime;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PhotonRoomManager : MonoBehaviourPunCallbacks
 {
@@ -26,6 +27,8 @@ public class PhotonRoomManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         _room = PhotonNetwork.CurrentRoom;
+
+        SceneManager.LoadScene("GameScene");
 
         OnRoomChanged?.Invoke();
         OnRoomJoined?.Invoke();
