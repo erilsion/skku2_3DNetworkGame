@@ -14,7 +14,7 @@ public class PlayerNetworkIdentity : MonoBehaviourPun
 
     private void OnDestroy()
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (PlayerRegistry.Instance != null)
         {
             PlayerRegistry.Instance.Unregister(this);
         }
