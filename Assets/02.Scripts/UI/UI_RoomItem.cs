@@ -1,8 +1,9 @@
-﻿using UnityEngine;
-using TMPro;
+﻿using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
+using ExitGames.Client.Photon;
+using UnityEngine;
 using UnityEngine.UI;
-using Photon.Pun;
 
 public class UI_RoomItem : MonoBehaviour
 {
@@ -24,7 +25,10 @@ public class UI_RoomItem : MonoBehaviour
         _roomInfo = roomInfo;
 
         _roomNameTextUI.text = roomInfo.Name;
-        _masterNicknameTextUI.text = $"방장: {PhotonNetwork.NickName}";
+        if (roomInfo.CustomProperties.TryGetValue("MasterName", out object masterName))
+        {
+            _masterNicknameTextUI.text = $"방장: {masterName}";
+        }
         _playerCountTextUI.text = $"인원: {roomInfo.PlayerCount}/{roomInfo.MaxPlayers}";
     }
 

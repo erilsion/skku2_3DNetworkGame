@@ -1,6 +1,7 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
+using ExitGames.Client.Photon;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,8 @@ public class UI_Lobby : MonoBehaviour
     [SerializeField] private TMP_InputField NicknameInputField;
     [SerializeField] private TMP_InputField RoomnameInputField;
     [SerializeField] private Button CreateRoomButton;
+
+    public const string MASTER_NAME = "MasterName";
 
     public ECharacterType _characterType;
 
@@ -28,6 +31,12 @@ public class UI_Lobby : MonoBehaviour
         roomOptions.MaxPlayers = 20;   // 룸 최대 접속자 수
         roomOptions.IsVisible = true;  // 로비에서 룸을 보여줄 것인지 (공개/비공개 여부)
         roomOptions.IsOpen = true;     // 룸의 오픈 여부
+
+        // 커스텀 룸 프로퍼티 설정 (방장 닉네임)
+        Hashtable customProps = new Hashtable();
+        customProps[MASTER_NAME] = nickname;
+
+        roomOptions.CustomRoomProperties = customProps;
 
         // 룸 만들기
         PhotonNetwork.CreateRoom(roomName, roomOptions);

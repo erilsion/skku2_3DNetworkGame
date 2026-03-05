@@ -2,7 +2,6 @@
 using Photon.Realtime;
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PhotonRoomManager : MonoBehaviourPunCallbacks
 {
@@ -23,12 +22,21 @@ public class PhotonRoomManager : MonoBehaviourPunCallbacks
         Instance = this;
     }
 
-    // 방 입장에 성공하면 자동으로 호출되는 콜백 함수
+    // 방 입장에 성공하면 자동으로 호출되는 콜백 함수이다.
     public override void OnJoinedRoom()
     {
         _room = PhotonNetwork.CurrentRoom;
 
-        SceneManager.LoadScene("GameScene");
+        // 포톤은 SceneManager.LoadScene() 대신 PhotonNetwork.LoadLevel()을 사용해야 한다.
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("GameScene");
+        }
+        else
+        {
+            // 방장이 씬을 로드할 때까지 기다린다.
+            // 아무 것도 하지 않아도 자동으로 방장의 씬으로 이동한다.
+        }
 
         OnRoomChanged?.Invoke();
         OnRoomJoined?.Invoke();

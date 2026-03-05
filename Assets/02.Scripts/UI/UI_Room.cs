@@ -7,16 +7,13 @@ using Photon.Realtime;
 public class UI_Room : MonoBehaviourPunCallbacks
 {
     private List<UI_RoomItem> _roomItems;
-    private Dictionary<string, RoomInfo> _rooms;
+    private Dictionary<string, RoomInfo> _rooms = new();
 
     private void Awake()
     {
         _roomItems = GetComponentsInChildren<UI_RoomItem>().ToList();
 
-        foreach (UI_RoomItem roomItem in _roomItems)
-        {
-            roomItem.gameObject.SetActive(false);
-        }
+        HideAllRoomUI();
     }
 
     private void HideAllRoomUI() 
