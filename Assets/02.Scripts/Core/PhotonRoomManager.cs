@@ -19,7 +19,15 @@ public class PhotonRoomManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     // 방 입장에 성공하면 자동으로 호출되는 콜백 함수이다.
@@ -43,6 +51,14 @@ public class PhotonRoomManager : MonoBehaviourPunCallbacks
 
         // 리소스 폴더에서 "Player" 이름을 가진 프리팹을 생성(인스턴스화)하고, 서버에 등록도 한다.
         // ㄴ 리소스 폴더는 나쁜 것이다. 그렇기 때문에 다른 방법을 찾아보자.
+    }
+
+    public override void OnLeftRoom()
+    {
+        _room = null;
+
+        // 방을 나가면 로비씬으로 이동한다.
+        PhotonNetwork.LoadLevel("LobbyScene");
     }
 
     // 새로운 플레이어가 방에 입장하면 자동으로 호출되는 함수이다.

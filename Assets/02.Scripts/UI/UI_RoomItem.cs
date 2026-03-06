@@ -32,7 +32,7 @@ public class UI_RoomItem : MonoBehaviour
         _playerCountTextUI.text = $"인원: {roomInfo.PlayerCount}/{roomInfo.MaxPlayers}";
     }
 
-public void EnterRoom()
+    public void EnterRoom()
     {
         if (_roomInfo == null) return;
 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PhotonServerManager : MonoBehaviourPunCallbacks
 {
+    public static PhotonServerManager Instance;
     // MonoBehaviour: Unity의 다양한 '이벤트' 콜백 함수를 오버라이드할 수 있다.(Awake, Start, Update...)
     // MonoBehaviourPunCallbacks: Pun의 다양한 '서버 이벤트' 콜백 함수를 오버라이드할 수 있다.
     // - 서버 접속에 성공/실패했다.
@@ -12,6 +13,19 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
 
     private string _version = "0.0.1";
     private string _nickname = "User";
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
