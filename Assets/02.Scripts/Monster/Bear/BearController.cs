@@ -60,8 +60,14 @@ public class BearController : MonoBehaviourPunCallbacks, IPunObservable
             { EBearStateType.Dead, new BearDeadState(this) }
         };
 
-        _agent = GetComponent<NavMeshAgent>();
-        _animator = GetComponent<Animator>();
+        if (_agent == null)
+        {
+            _agent = GetComponent<NavMeshAgent>();
+        }
+        if (_animator == null)
+        {
+            _animator = GetComponent<Animator>();
+        }
         _attackCollider.enabled = false;
     }
 
@@ -74,6 +80,8 @@ public class BearController : MonoBehaviourPunCallbacks, IPunObservable
             PhotonRoomManager.Instance.OnRoomJoined += SetupByMasterState;
             PhotonRoomManager.Instance.OnMasterClientChanged += SetupByMasterState;
         }
+
+        SetupByMasterState();
     }
 
     public override void OnDisable()
@@ -339,13 +347,11 @@ public class BearController : MonoBehaviourPunCallbacks, IPunObservable
         {
             // 마스터 클라이언트가 데이터를 전송한다.
             stream.SendNext(Stat.Health);
-            stream.SendNext((int)CurrentStateType);
         }
         else if (stream.IsReading)
         {
             // 다른 클라이언트가 데이터를 수신한다.
             Stat.Health = (float)stream.ReceiveNext();
-            CurrentStateType = (EBearStateType)stream.ReceiveNext();
         }
     }
 }
