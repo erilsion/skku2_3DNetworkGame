@@ -1,7 +1,6 @@
 ﻿using System;
 
 [Serializable]
-
 public class BearStat
 {
     public float MoveSpeed;

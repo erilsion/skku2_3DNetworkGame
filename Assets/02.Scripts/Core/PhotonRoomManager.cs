@@ -22,16 +22,25 @@ public class PhotonRoomManager : MonoBehaviourPunCallbacks
         Instance = this;
     }
 
-    // 방 입장에 성공하면 자동으로 호출되는 콜백 함수
+    // 방 입장에 성공하면 자동으로 호출되는 콜백 함수이다.
     public override void OnJoinedRoom()
     {
         _room = PhotonNetwork.CurrentRoom;
 
+        // 포톤은 SceneManager.LoadScene() 대신 PhotonNetwork.LoadLevel()을 사용해야 한다.
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("GameScene");
+        }
+        else
+        {
+            // 방장이 씬을 로드할 때까지 기다린다.
+            // 아무 것도 하지 않아도 자동으로 방장의 씬으로 이동한다.
+        }
+
         OnRoomChanged?.Invoke();
         OnRoomJoined?.Invoke();
 
-        // 스폰 포지션을 지정하고 플레이어를 스폰한다.
-        PlayerSpawner.Instance.PlayerSpawn();
         // 리소스 폴더에서 "Player" 이름을 가진 프리팹을 생성(인스턴스화)하고, 서버에 등록도 한다.
         // ㄴ 리소스 폴더는 나쁜 것이다. 그렇기 때문에 다른 방법을 찾아보자.
     }

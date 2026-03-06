@@ -21,7 +21,14 @@ public class RoomInfoUI : MonoBehaviour
         Room room = PhotonRoomManager.Instance.Room;
         if (room == null) return;
 
-        _roomNameTextUI.text = room.Name;
+        // CustomRoomProperties에서 방장 닉네임을 가져온다. 없으면 "Unknown"으로 표시한다.
+        string masterName = "Unknown";
+        if (room.CustomProperties != null && room.CustomProperties.ContainsKey(UI_Lobby.MASTER_NAME))
+        {
+            masterName = room.CustomProperties[UI_Lobby.MASTER_NAME].ToString();
+        }
+
+        _roomNameTextUI.text = $"{room.Name} (Host: {masterName})";
         _playerCountTextUI.text = $"{room.PlayerCount}/{room.MaxPlayers}";
     }
 

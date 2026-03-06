@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BearController : MonoBehaviourPunCallbacks
+public class BearController : MonoBehaviourPunCallbacks, IPunObservable
 {
     public BearStat Stat;
 
@@ -44,7 +44,7 @@ public class BearController : MonoBehaviourPunCallbacks
     private float _speedLerpInterpolation = 10f;
     private Vector3 _bearLastPosition;
 
-    void Awake()
+    private void Awake()
     {
         InitPatrolPoints();
 
@@ -60,8 +60,14 @@ public class BearController : MonoBehaviourPunCallbacks
             { EBearStateType.Dead, new BearDeadState(this) }
         };
 
-        _agent = GetComponent<NavMeshAgent>();
-        _animator = GetComponent<Animator>();
+        if (_agent == null)
+        {
+            _agent = GetComponent<NavMeshAgent>();
+        }
+        if (_animator == null)
+        {
+            _animator = GetComponent<Animator>();
+        }
         _attackCollider.enabled = false;
     }
 
@@ -74,6 +80,8 @@ public class BearController : MonoBehaviourPunCallbacks
             PhotonRoomManager.Instance.OnRoomJoined += SetupByMasterState;
             PhotonRoomManager.Instance.OnMasterClientChanged += SetupByMasterState;
         }
+
+        SetupByMasterState();
     }
 
     public override void OnDisable()
@@ -109,8 +117,8 @@ public class BearController : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             // 마스터 클라이언트에서 처리하는 로직이다.
+            FindClosestTarget();
             _currentState?.Update();
-
             float speedPercent = _agent.velocity.magnitude / _agent.speed;
             _animator.SetFloat("Speed", speedPercent);
         }
@@ -212,6 +220,8 @@ public class BearController : MonoBehaviourPunCallbacks
 
     public override void OnMasterClientSwitched(Photon.Realtime.Player newMasterClient)
     {
+        if (_agent == null) return;
+
         if (PhotonNetwork.IsMasterClient)
         {
             _agent.enabled = true;
@@ -252,17 +262,33 @@ public class BearController : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.IsMasterClient) return false;
 
-        FindClosestTarget();
+        float closestDistance = float.MaxValue;
+        Transform detectedTarget = null;
 
-        if (_target == null) return false;
+        foreach (var player in PlayerRegistry.Instance.Players)
+        {
+            Transform playerTransform = player.Value;
+            if (playerTransform == null) continue;
 
-        Vector3 bearPosition = transform.position;
-        Vector3 targetPosition = _target.position;
+            Vector3 diff = playerTransform.position - transform.position;
+            diff.y = 0f;
 
-        float distance = Vector3.Distance(new Vector3(bearPosition.x, 0, bearPosition.z),
-                         new Vector3(targetPosition.x, 0, targetPosition.z));
+            float distance = diff.magnitude;
 
-        return distance <= Stat.DetectRange;
+            if (distance <= Stat.DetectRange && distance < closestDistance)
+            {
+                closestDistance = distance;
+                detectedTarget = playerTransform;
+            }
+        }
+
+        if (detectedTarget != null)
+        {
+            _target = detectedTarget;
+            return true;
+        }
+
+        return false;
     }
 
     public void OnAttackStart()
@@ -312,6 +338,20 @@ public class BearController : MonoBehaviourPunCallbacks
         if (_currentState is BearDeadState deadState)
         {
             deadState.OnDeadAnimationEnd();
+        }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            // 마스터 클라이언트가 데이터를 전송한다.
+            stream.SendNext(Stat.Health);
+        }
+        else if (stream.IsReading)
+        {
+            // 다른 클라이언트가 데이터를 수신한다.
+            Stat.Health = (float)stream.ReceiveNext();
         }
     }
 }

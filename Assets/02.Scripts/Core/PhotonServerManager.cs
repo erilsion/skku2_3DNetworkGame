@@ -1,6 +1,5 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PhotonServerManager : MonoBehaviourPunCallbacks
@@ -16,10 +15,14 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        _nickname += $"_{Random.Range(100, 999)}";
+        // 이미 닉네임이 설정되어 있으면 (로비에서 입력한 경우) 덮어쓰지 않게 한다.
+        if (string.IsNullOrEmpty(PhotonNetwork.NickName) || PhotonNetwork.NickName == "Player")
+        {
+            _nickname += $"_{Random.Range(100, 999)}";
+            PhotonNetwork.NickName = _nickname;
+        }
 
         PhotonNetwork.GameVersion = _version;
-        PhotonNetwork.NickName = _nickname;
 
         PhotonNetwork.SendRate = 30;        // 얼마나 자주 데이터를 송수신할 것인지 정한다. (실제 송수신)
         PhotonNetwork.SerializationRate = 30; // 얼마나 자주 데이터를 직렬화할 것인지 정한다. (송수신 준비)
@@ -60,7 +63,7 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
         Debug.Log(PhotonNetwork.InLobby);
 
         // 랜덤 방 입장 시도
-        PhotonNetwork.JoinRandomRoom();
+        // PhotonNetwork.JoinRandomRoom();
     }
 
     // 랜덤 방 입장에 실패하면 자동으로 호출되는 콜백 함수
@@ -69,14 +72,6 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
         Debug.Log($"랜덤 방 입장에 실패했습니다: {returnCode} - {message}");
 
         // 랜덤 룸 입장에 실패하면 룸이 하나도 없는 것이니 룸을 만들자.
-        // 룸 옵션 정의
-        RoomOptions roomOptions = new RoomOptions();
-        roomOptions.MaxPlayers = 20;   // 룸 최대 접속자 수
-        roomOptions.IsVisible = true;  // 로비에서 룸을 보여줄 것인지 (공개/비공개 여부)
-        roomOptions.IsOpen = true;     // 룸의 오픈 여부
-
-        // 룸 만들기
-        PhotonNetwork.CreateRoom("TestRoom", roomOptions);
     }
 
     // 방 입장에 실패하면 자동으로 호출되는 콜백 함수

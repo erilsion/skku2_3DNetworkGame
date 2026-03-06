@@ -87,8 +87,6 @@ public class PlayerRegistry : MonoBehaviour
 
     public Transform GetClosestPlayer(Vector3 position)
     {
-        if (!PhotonNetwork.IsMasterClient) return null;
-        
         float minDistance = float.MaxValue;
         Transform closest = null;
 
