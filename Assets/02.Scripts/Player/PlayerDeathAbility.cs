@@ -8,9 +8,6 @@ public class PlayerDeathAbility : PlayerAbility
     private CharacterController _characterController;
     private Animator _animator;
     private PlayerMoveAbility _moveAbility;
-    private Coroutine _respawnCoroutine;
-
-    private float _respawnCooltime = 3.0f;
 
     private void Start()
     {
@@ -32,16 +29,11 @@ public class PlayerDeathAbility : PlayerAbility
         if (!_owner.PhotonView.IsMine) return;
 
         ScoreManager.Instance.HalfScore();
-        if (_respawnCoroutine != null) return;
-        _respawnCoroutine = StartCoroutine(RespawnRoutine());
+        _owner.PhotonView.RPC(nameof(DisablePlayer), RpcTarget.All);
     }
 
-    private IEnumerator RespawnRoutine()
+    public void RespawnPlayer()
     {
-        _owner.PhotonView.RPC(nameof(DisablePlayer), RpcTarget.All);
-
-        yield return new WaitForSeconds(_respawnCooltime);
-
         if (_owner.PhotonView.IsMine)
         {
             _controller.Stat.Health = _controller.Stat.MaxHealth;
@@ -56,8 +48,6 @@ public class PlayerDeathAbility : PlayerAbility
             PhotonNetwork.SendAllOutgoingCommands();
         }
         _owner.PhotonView.RPC(nameof(EnablePlayer), RpcTarget.All);
-
-        _respawnCoroutine = null;
     }
 
     [PunRPC]
