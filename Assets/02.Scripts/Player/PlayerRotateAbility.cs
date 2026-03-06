@@ -10,16 +10,16 @@ public class PlayerRotateAbility : PlayerAbility
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-
         if (!_owner.PhotonView.IsMine) return;
-
+        Cursor.lockState = CursorLockMode.Locked;
         CinemachineCamera vcam = GameObject.Find("FollowCamera").GetComponent<CinemachineCamera>();
         vcam.Follow = _cameraRoot.transform;
     }
 
     private void Update()
     {
+        if (!_owner.PhotonView.IsMine) return;
+
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 
