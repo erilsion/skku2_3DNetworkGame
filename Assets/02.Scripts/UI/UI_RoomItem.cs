@@ -32,9 +32,25 @@ public class UI_RoomItem : MonoBehaviour
         _playerCountTextUI.text = $"인원: {roomInfo.PlayerCount}/{roomInfo.MaxPlayers}";
     }
 
-    public void EnterRoom()
+public void EnterRoom()
     {
         if (_roomInfo == null) return;
+
+        // UI_Lobby에서 닉네임을 가져온다.
+        UI_Lobby lobby = FindAnyObjectByType<UI_Lobby>();
+        if (lobby != null)
+        {
+            string nickname = lobby.GetNickname();
+            if (!string.IsNullOrEmpty(nickname))
+            {
+                PhotonNetwork.NickName = nickname;
+            }
+            else
+            {
+                Debug.LogWarning("닉네임을 입력해주세요!");
+                return;
+            }
+        }
 
         PhotonNetwork.JoinRoom(_roomInfo.Name);
     }

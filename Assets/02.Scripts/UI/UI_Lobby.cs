@@ -53,4 +53,9 @@ public class UI_Lobby : MonoBehaviour
         MaleCharacter.SetActive(_characterType == ECharacterType.Male);
         FemaleCharacter.SetActive(_characterType == ECharacterType.Female);
     }
+
+    public string GetNickname()
+    {
+        return NicknameInputField.text;
+    }
 }

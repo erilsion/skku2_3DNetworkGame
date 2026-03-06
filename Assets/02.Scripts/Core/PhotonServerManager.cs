@@ -15,10 +15,14 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        _nickname += $"_{Random.Range(100, 999)}";
+        // 이미 닉네임이 설정되어 있으면 (로비에서 입력한 경우) 덮어쓰지 않게 한다.
+        if (string.IsNullOrEmpty(PhotonNetwork.NickName) || PhotonNetwork.NickName == "Player")
+        {
+            _nickname += $"_{Random.Range(100, 999)}";
+            PhotonNetwork.NickName = _nickname;
+        }
 
         PhotonNetwork.GameVersion = _version;
-        PhotonNetwork.NickName = _nickname;
 
         PhotonNetwork.SendRate = 30;        // 얼마나 자주 데이터를 송수신할 것인지 정한다. (실제 송수신)
         PhotonNetwork.SerializationRate = 30; // 얼마나 자주 데이터를 직렬화할 것인지 정한다. (송수신 준비)
