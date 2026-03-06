@@ -18,8 +18,9 @@ public class BearStatUI : MonoBehaviour
 
     private void Update()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
-        
-        _healthGauge.fillAmount = _bear.Stat.Health / _bear.Stat.MaxHealth;
+        if (_bear != null && _bear.Stat != null)
+        {
+            _healthGauge.fillAmount = _bear.Stat.Health / _bear.Stat.MaxHealth;
+        }
     }
 }

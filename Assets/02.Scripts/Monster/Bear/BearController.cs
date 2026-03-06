@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BearController : MonoBehaviourPunCallbacks
+public class BearController : MonoBehaviourPunCallbacks, IPunObservable
 {
     public BearStat Stat;
 
@@ -44,7 +44,7 @@ public class BearController : MonoBehaviourPunCallbacks
     private float _speedLerpInterpolation = 10f;
     private Vector3 _bearLastPosition;
 
-    void Awake()
+    private void Awake()
     {
         InitPatrolPoints();
 
@@ -314,6 +314,22 @@ public class BearController : MonoBehaviourPunCallbacks
         if (_currentState is BearDeadState deadState)
         {
             deadState.OnDeadAnimationEnd();
+        }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            // 마스터 클라이언트가 데이터를 전송한다.
+            stream.SendNext(Stat.Health);
+            stream.SendNext((int)CurrentStateType);
+        }
+        else if (stream.IsReading)
+        {
+            // 다른 클라이언트가 데이터를 수신한다.
+            Stat.Health = (float)stream.ReceiveNext();
+            CurrentStateType = (EBearStateType)stream.ReceiveNext();
         }
     }
 }
