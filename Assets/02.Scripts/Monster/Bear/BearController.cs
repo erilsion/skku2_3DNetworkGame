@@ -212,6 +212,8 @@ public class BearController : MonoBehaviourPunCallbacks
 
     public override void OnMasterClientSwitched(Photon.Realtime.Player newMasterClient)
     {
+        if (_agent == null) return;
+
         if (PhotonNetwork.IsMasterClient)
         {
             _agent.enabled = true;

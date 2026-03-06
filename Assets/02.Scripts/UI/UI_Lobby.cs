@@ -37,6 +37,7 @@ public class UI_Lobby : MonoBehaviour
         customProps[MASTER_NAME] = nickname;
 
         roomOptions.CustomRoomProperties = customProps;
+        roomOptions.CustomRoomPropertiesForLobby = new string[] { MASTER_NAME };
 
         // 룸 만들기
         PhotonNetwork.CreateRoom(roomName, roomOptions);
